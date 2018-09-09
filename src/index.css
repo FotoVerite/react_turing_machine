@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'MaxterBoardSt';
+  src: url('./MaxterBoardSt.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.machine-base {
+	margin-left:20px;
+	border: 1px solid black;
+	width: 10em;
+	height: 20em;
+}
+
+.machine-head {
+	position: absolute;
+	top:14em;
+	left:5em;
+	border: 1px solid black;
+	width: 2em;
+	height: 13em;
+}
+
+.tape {
+	position: absolute;
+	top: 30%;
+	border: 1px solid brown;
+	width: 100%;
+	height: 2em;
+}
+
+.tape div.blank-tape {
+	width: 12em;
+	height: 2em;
+}
+
+.tape div {
+	text-align:center;
+	float:left;
+	border-right: 2px dotted brown;
+	height:2em;
+	width: 2em;
+}
