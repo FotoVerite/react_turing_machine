@@ -9,7 +9,12 @@ body {
   font-family: sans-serif;
 }
 
+.App {
+	padding-top:100px;
+}
+
 .machine-base {
+	margin-top:200px;
 	margin-left:20px;
 	border: 1px solid black;
 	width: 10em;
@@ -44,4 +49,15 @@ body {
 	border-right: 2px dotted brown;
 	height:2em;
 	width: 2em;
+}
+
+.powerButton {
+	margin-top:50px;
+	float:left;
+	width:100px;
+	margin-left:20px;
+}
+
+.powerButton img {
+	width:100px;
 }

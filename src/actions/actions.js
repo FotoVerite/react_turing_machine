@@ -3,3 +3,9 @@ export function send() {
     type: '👍'
   };
 }
+
+export function send_step(action) {
+  return {
+    type: action
+  };
+}

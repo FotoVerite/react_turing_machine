@@ -12,22 +12,8 @@ class App extends Component {
 
  render() {
 
-   {
-    var tape = [];
-    for (let i=0; i < 50; i++) {
-      tape.push(<div className='blank-square tape-square' />)
-    }
-  }
-
   return (
    <div className="App">
-    <header className="App-header">
-     <img src={logo} className="App-logo" alt="logo" />
-     <h1 className="App-title">Welcome to React</h1>
-    </header>
-    <p className="App-intro">
-     To get started, edit <code>src/App.js</code> and save to reload
-    </p>
 
     <div className="machine-base">
 
@@ -36,17 +22,6 @@ class App extends Component {
     <div className="machine-head">
     </div>
     <Head />
-
-    <div className="tape">
-      <div className="blank-tape">
-      </div>
-      <div className="swah tape-square">
-        🍔🍔
-      </div>
-
-     
-      {tape}
-    </div>
    
     <Output />
    </div>

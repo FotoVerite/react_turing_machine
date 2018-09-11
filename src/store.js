@@ -5,6 +5,13 @@ export default function configureStore() {
  return createStore(
   rootReducer,
    {
+   	machine: {
+   		direction: 'forward',
+   		speed: 'normal',
+   		steps: [],
+   		output: "",
+   		cursor: 0
+   	},
    	head: {
    		direction: 'forward',
    		speed: 'normal',
