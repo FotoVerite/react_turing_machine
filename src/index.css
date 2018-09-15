@@ -51,13 +51,24 @@ body {
 	width: 2em;
 }
 
+button {
+	width:100px;
+	height: 55px;
+	margin-left:20px;
+}
+
 .powerButton {
 	margin-top:50px;
 	float:left;
 	width:100px;
-	margin-left:20px;
 }
 
 .powerButton img {
-	width:100px;
+	width:50px;
+}
+
+.basicOperations {
+	float:right;
+	text-align: left;
+	margin-right:24px;
 }

@@ -10,6 +10,7 @@
     "react-move": "^2.8.0",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.5",
+    "react-select": "^2.0.0",
     "react-typing-animation": "^1.4.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"

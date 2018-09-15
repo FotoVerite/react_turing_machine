@@ -6,11 +6,15 @@ export default function configureStore() {
   rootReducer,
    {
    	machine: {
+         bootup: false,
    		direction: 'forward',
-   		speed: 'normal',
+   		speed: 'stopped',
+         startNextStep: 0,
    		steps: [],
    		output: "",
-   		cursor: 0
+   		cursor: 0,
+         headPosition: 84,
+         tapePosition: 0
    	},
    	head: {
    		direction: 'forward',
