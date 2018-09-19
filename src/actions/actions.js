@@ -10,9 +10,10 @@ export function send() {
   };
 }
 
-export function send_step(action) {
+export function send_step(action, symbol) {
   return {
-    type: action
+    type: action,
+    data: symbol
   };
 }
 
@@ -31,5 +32,13 @@ export function play() {
 export function stop() {
   return {
     type: 'stop'
+  };
+}
+
+
+export function replace_configuration(data) {
+  return {
+    type: 'REPLACE_CONFIGURATION',
+    data: data
   };
 }

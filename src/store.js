@@ -16,14 +16,11 @@ export default function configureStore() {
          headPosition: 84,
          tapePosition: 0
    	},
-   	head: {
-   		direction: 'forward',
-   		speed: 'normal',
-   		steps: [],
+   	configurationsTable: {
    		start: '🌂',
    		configurations: {
    			name: '🌂',
-		 		description: "Print .000000_ forever.",
+		 		description: "Print .1111111_ forever.",
 		 		operations: {
 		 			'🌂': {
 		 				steps: ['👍', '👍', '🙋'],

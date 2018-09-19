@@ -13,13 +13,7 @@ class App extends Component {
 
   return (
    <div className="App">
-
-    <div className="machine-base">
-
-    </div>
-
-    <div className="machine-head">
-    </div>
+   
     <Head />
    
     <Output />

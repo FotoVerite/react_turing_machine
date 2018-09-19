@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import head from './head';
+import configurationsTable from './configurationsTable';
 import machine from './machine';
 
 export default combineReducers({
- head,
+ configurationsTable,
  machine
 });

@@ -11,7 +11,6 @@ const trackStyles = {
   height: 200,
   background: 'black',
   border: '1px solid green',
-  position: 'absolute',
   color: 'white',
   fontFamily: 'MaxterBoardSt',
   fontSize: 56

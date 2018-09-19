@@ -5,6 +5,7 @@ import Animate from 'react-move/Animate';
 import { easeExpOut } from 'd3-ease';
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import JSONInput from 'react-json-editor-ajrm';
 
 import powerButton from '../images/powerStandby.svg'
 import stopImg from '../images/stop.svg'
@@ -16,36 +17,31 @@ import configurationsOptions from '../configurations'
 import * as actions from '../actions/actions';
 
 const trackStyles = {
-  top: '14em',
+  top: '0em',
   position: 'absolute',
 };
 
 class HEAD extends Component {
   state = {
     update: true,
-    headPosition: 64,
     myNodeList: document.getElementsByClassName("tape-square"),
-    speed: 200,
-    tapePosition: 0
+    speed: 100,
   }
 
 
   configurationSelectOptions = () => {
-    console.log(basicOperations)
     var operations = [];
-    for (var i = basicOperations.length - 1; i >= 0; i--) {
-      const operation = basicOperations[i]
-      operations.push({ value: Object.keys(operation), label: `${Object.keys(operation)}:${operation[Object.keys(operation)].description}`})
+    for (var key in configurationsOptions) {
+      const operation = configurationsOptions[key]
+      operations.push({ value: key, label: `${key}:${configurationsOptions[key].description}`})
     }
-    console.log('asd')
-
     return operations
   }
 
   basicOperationsDescription = () => {
     var operations = [];
-    for (var i = configurationsOptions.length - 1; i >= 0; i--) {
-      const operation = configurationsOptions[i]
+    for (var i = basicOperations.length - 1; i >= 0; i--) {
+      const operation = basicOperations[i]
       operations.push(<li>{Object.keys(operation)}: {operation[Object.keys(operation)].description}</li>)
     }
     return operations
@@ -64,7 +60,7 @@ class HEAD extends Component {
     if(this.props.machine.bootup === false){
       this.props.bootUp();
       this.setState({ update: true });
-      setTimeout(this['startConfiguration'], this.state.speed, this.props.head.start);
+      setTimeout(this['startConfiguration'], this.state.speed, this.props.configurationsTable.start);
     }
     this.props.play();
   }
@@ -72,18 +68,60 @@ class HEAD extends Component {
   handleStep = () => {
     if(this.props.machine.bootup === false){
       this.props.bootUp();
-      setTimeout(this['startConfiguration'], this.state.speed, this.props.head.start);
+      setTimeout(this['startConfiguration'], this.state.speed, this.props.configurationsTable.start);
     }
     this.setState({ update: true });
     this.props.startNextStep();
   }
 
   startConfiguration = (emoji) => {
-    const configuration = this.props.head.configurations.operations[emoji];
-    const cbArray = Object.assign([], configuration.steps)
-    var step = cbArray.shift();
-    setTimeout(this[step],  this.state.speed, cbArray, configuration.callback); 
+    const configuration = this.props.configurationsTable.configurations.operations[emoji];
+    console.log('Started configuration ' + emoji + " " + configuration.name )
+
+    var stepConfiguration;
+    if(configuration.steps) {
+      stepConfiguration = this.findStepsAndCallback(configuration);
+    }
+    else {
+      const symbol = this.state.myNodeList[this.props.machine.cursor].innerText;
+      console.log(symbol);
+      if(symbol !=='') {
+        if(configuration[symbol]) {
+          stepConfiguration = this.findStepsAndCallback(configuration, symbol);
+        }
+        else {
+          stepConfiguration = this.findStepsAndCallback(configuration, '🔣');
+        }
+      }
+      else{
+        stepConfiguration = this.findStepsAndCallback(configuration, '🕳');
+      }
+    }
+    console.log('Next configuration will be ' + stepConfiguration.cb );
+
+    if(stepConfiguration.step === undefined){
+      return setTimeout(this['startConfiguration'], this.state.speed, stepConfiguration.cb);
+
+    }
+    if(stepConfiguration.step.match('🖨')){
+      const nextStep = [...stepConfiguration.step]
+      return setTimeout(this[nextStep[0]], this.state.speed, nextStep[1], stepConfiguration.stepArray, stepConfiguration.cb);
+    }
+    else {
+      return setTimeout(this[stepConfiguration.step], this.state.speed, stepConfiguration.stepArray, stepConfiguration.cb);
+    }
   }
+
+  findStepsAndCallback = (configuration, emoji) => {
+    if(emoji !== undefined) {
+     configuration = configuration[emoji];
+    }
+    const stepArray = Object.assign([], configuration.steps)
+    const step = stepArray.shift();
+    return { stepArray: stepArray, step: step, cb: configuration.callback };
+  }
+
+  //steps
 
   '👍' = (stepArray, cb) => {
     const self = this.state;
@@ -96,10 +134,38 @@ class HEAD extends Component {
     this.nextStep(stepArray, cb)
   }
 
+  '👎' = (stepArray, cb) => {
+    const self = this.state;
+    this.props.send_step('👎');
+    this.nextStep(stepArray, cb)
+  }
+
+
+  '🖨' = (symbol, stepArray, cb) => {
+    this.props.send_step('🖨', symbol);
+    var node= this.state.myNodeList[this.props.machine.cursor];
+    node.innerHTML  = symbol;
+    this.nextStep(stepArray, cb)
+  }
+
   '🙋' = (stepArray, cb) => {
     this.props.send_step('🙋');
     var node= this.state.myNodeList[this.props.machine.cursor];
     node.innerHTML  = '1';
+    this.nextStep(stepArray, cb)
+  }
+
+  '⭕' = (stepArray, cb) => {
+    this.props.send_step('⭕');
+    var node= this.state.myNodeList[this.props.machine.cursor];
+    node.innerHTML  = '0';
+    this.nextStep(stepArray, cb)
+  }
+
+  '🕳' = (stepArray, cb) => {
+    this.props.send_step('🕳');
+    var node = this.state.myNodeList[this.props.machine.cursor];
+    node.innerHTML  = '';
     this.nextStep(stepArray, cb)
   }
 
@@ -110,7 +176,7 @@ class HEAD extends Component {
         //continue
       } 
       else {
-        setTimeout(this.nextStep, 100, stepArray, cb);
+        setTimeout(this.nextStep, this.state.speed, stepArray, cb);
         return;
       }     
     }
@@ -118,12 +184,18 @@ class HEAD extends Component {
       //continue
     } 
     else {
-      setTimeout(this.nextStep, 100, stepArray, cb);
+      setTimeout(this.nextStep, this.state.speed, stepArray, cb);
       return;
     }     
     if(stepArray.length > 0) {
       const step = stepArray.shift();
-      setTimeout(this[step], this.state.speed, stepArray, cb);
+      if(step.match('🖨')){
+        const nextStep = [...step]
+        setTimeout(this[nextStep[0]], this.state.speed, nextStep[1], stepArray, cb);
+      }
+      else {
+        setTimeout(this[step], this.state.speed, stepArray, cb);
+      }
     }
     else {
       setTimeout(this['startConfiguration'], this.state.speed, cb);
@@ -135,105 +207,149 @@ class HEAD extends Component {
 
     return (
       <div>
-        <button
-          onClick={this.props.machine.speed === 'normal' ? this.stop : this.handleClick}
-          className='powerButton'
-        >
-        <img src={this.props.machine.speed === 'normal' ? stopImg : powerButton} className="" alt="power-button" />
-        </button>
-        <button
-          onClick={this.handleStep}
-          className='powerButton'
-        >
-        <img src={rightArrow} className="" alt="power-button" />
-        </button>
-        <Animate
-          start={() => ({
-            headPosition: 84
-          })}
+        <JSONInput
+          style={{outerBox: {
+            float: "left",
+            textAlign: 'left'
+          }}}
+          id          = 'a_unique_id'
+          placeholder = { this.props.configurationsTable }
+          height      = '1000px'
+        />
 
-          update={() => ({
-            headPosition: [this.props.machine.headPosition],
-            timing: { duration: 1100, ease: easeExpOut },
-          })}
-        >
-          {(state) => {
-            const { headPosition } = state;
+        <div style={{
+          float: 'right', 
+          width: '65%'
+        }}>
+        <div className="machine-base">
 
-            return (
-              <div style={trackStyles}>
-                <div
+        </div>
+
+        <div className="machine-head">
+        </div>
+
+          <Animate
+            start={() => ({
+              headPosition: 84
+            })}
+
+            update={() => ({
+              headPosition: [this.props.machine.headPosition],
+              timing: { duration: this.state.speed, ease: easeExpOut },
+            })}
+          >
+            {(state) => {
+              const { headPosition } = state;
+
+              return (
+                <div style={trackStyles}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      zIndex: 5,
+                      width: '2em',
+                      height: '34em',
+                      borderRadius: 4,
+                      opacity: 0.7,
+                      backgroundColor: '#000000',
+                      WebkitTransform: `translate3d(${headPosition}px, 0, 0)`,
+                      transform: `translate3d(${headPosition}px, 0, 0)`,
+                    }}
+                  />
+                </div>
+              );
+            }}
+          </Animate>
+
+          <Animate
+            start={() => ({
+              tapePosition: 0
+            })}
+
+            update={() => ({
+              tapePosition: [this.props.machine.tapePosition],
+              timing: { duration: this.state.speed, ease: easeExpOut },
+            })}
+          >
+            {(state) => {
+              const { tapePosition } = state;
+
+          
+              var tape = [];
+              for (let i=0; i < 10; i++) {
+                tape.push(<div className='blank-square tape-square' key={i} />)
+              }
+          
+
+              return (
+
+                <div className="tape"
                   style={{
-                    position: 'absolute',
-                    width: '2em',
-                    height: '14em',
-                    borderRadius: 4,
-                    opacity: 0.7,
-                    backgroundColor: '#00cf77',
-                    WebkitTransform: `translate3d(${headPosition}px, 0, 0)`,
-                    transform: `translate3d(${headPosition}px, 0, 0)`,
+                    width: `calc(100% - ${tapePosition}px)`,
+                    WebkitTransform: `translate3d(${tapePosition}px, 0, 0)`,
+                    transform: `translate3d(${tapePosition}px, 0, 0)`
                   }}
-                />
-              </div>
-            );
-          }}
-        </Animate>
-
-        <Animate
-          start={() => ({
-            tapePosition: 0
-          })}
-
-          update={() => ({
-            tapePosition: [this.props.machine.tapePosition],
-            timing: { duration: 1100, ease: easeExpOut },
-          })}
-        >
-          {(state) => {
-            const { tapePosition } = state;
-          {
-            var tape = [];
-            for (let i=0; i < 10; i++) {
-              tape.push(<div className='blank-square tape-square' key={i} />)
-            }
-          }
-
-            return (
-
-              <div className="tape"
-                style={{
-                  width: `calc(100% - ${tapePosition}px)`,
-                  WebkitTransform: `translate3d(${tapePosition}px, 0, 0)`,
-                  transform: `translate3d(${tapePosition}px, 0, 0)`
-                }}
-              >
-                <div className="blank-tape">
+                >
+                  <div className="blank-tape">
+                  </div>
+                 
+                  {tape}
                 </div>
-                <div className="swah tape-square">
-                  🍔🍔
-                </div>
+              );
+            }}
+          </Animate>
 
-               
-                {tape}
-              </div>
-            );
-          }}
-        </Animate>
+          <input 
+            style={{
+              marginLeft: '1em',
+              padding: '0.5em',
+              borderRadius: 5,
+              height: '2em',
+              float: 'left',
+              clear: "both"
+            }}
+            value={this.props.machine.steps.length }
+          />
+         <div style={{ 
+          marginTop: '2em',
+          float: 'left',
+          width: '25em',
+          clear: "both",
+          marginLeft: '1em'
+          }}>
 
-      <Select
-        value={selectedOption}
-        onChange={this.configurationSelectOptions}
-        options={[]}
-      />
+          <Select
+            styles={{
+              width: 20
+            }}
+            value={selectedOption}
+            onChange={this.props.replace_configuration}
+            options={this.configurationSelectOptions()}
+          />
+        </div>
+        <div className="clearfix" ></div>
 
-      <p>Output: 
-        Binary: {this.props.machine.output} <br />
-        Integer: {parseInt(this.props.machine.output, 2)} <br />
-      </p>
-      <ul className='basicOperations'>
-        {this.basicOperationsDescription()}
-      </ul>
+         <button
+            onClick={this.props.machine.speed === 'normal' ? this.stop : this.handleClick}
+            className='powerButton'
+          >
+          <img src={this.props.machine.speed === 'normal' ? stopImg : powerButton} className="" alt="power-button" />
+          </button>
+          <button
+            onClick={this.handleStep}
+            className='powerButton'
+          >
+          <img src={rightArrow} className="" alt="power-button" />
+          </button>
 
+        <p>Output: 
+          Binary: {this.props.machine.output} <br />
+          Integer: {parseInt(this.props.machine.output, 2)} <br />
+        </p>
+        <ul className='basicOperations'>
+          {this.basicOperationsDescription()}
+        </ul>
+      </div>
       </div>
     );
   }
