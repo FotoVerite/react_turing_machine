@@ -32,7 +32,6 @@ class HEAD extends Component {
   configurationSelectOptions = () => {
     var operations = [];
     for (var key in configurationsOptions) {
-      const operation = configurationsOptions[key]
       operations.push({ value: key, label: `${key}:${configurationsOptions[key].description}`})
     }
     return operations
@@ -65,6 +64,11 @@ class HEAD extends Component {
     this.props.play();
   }
 
+  handleChange = (data) => {
+    this.setState({ update: true });
+    this.props.replace_configuration(data);
+  }
+
   handleStep = () => {
     if(this.props.machine.bootup === false){
       this.props.bootUp();
@@ -84,7 +88,6 @@ class HEAD extends Component {
     }
     else {
       const symbol = this.state.myNodeList[this.props.machine.cursor].innerText;
-      console.log(symbol);
       if(symbol !=='') {
         if(configuration[symbol]) {
           stepConfiguration = this.findStepsAndCallback(configuration, symbol);
@@ -94,7 +97,12 @@ class HEAD extends Component {
         }
       }
       else{
-        stepConfiguration = this.findStepsAndCallback(configuration, '🕳');
+        if(configuration['🕳']) {
+          stepConfiguration = this.findStepsAndCallback(configuration, '🕳');
+        }
+        else if(configuration['0']) {
+          stepConfiguration = this.findStepsAndCallback(configuration, '0');
+        }
       }
     }
     console.log('Next configuration will be ' + stepConfiguration.cb );
@@ -207,14 +215,12 @@ class HEAD extends Component {
 
     return (
       <div>
-        <JSONInput
-          style={{outerBox: {
-            float: "left",
-            textAlign: 'left'
-          }}}
-          id          = 'a_unique_id'
-          placeholder = { this.props.configurationsTable }
-          height      = '1000px'
+        <textarea 
+          value= {JSON.stringify(this.props.configurationsTable)}
+          style= {{
+            height: 1000, 
+            width: 300
+          }}
         />
 
         <div style={{
@@ -323,7 +329,7 @@ class HEAD extends Component {
               width: 20
             }}
             value={selectedOption}
-            onChange={this.props.replace_configuration}
+            onChange={this.handleChange}
             options={this.configurationSelectOptions()}
           />
         </div>

@@ -8,6 +8,11 @@ body {
   padding: 0;
   font-family: sans-serif;
   text-align: left;
+  font-size:16px;
+}
+
+p {
+	font-size: 24px;
 }
 
 .clearfix {
@@ -15,8 +20,27 @@ body {
 	clear: both;
 }
 
+.center {
+	text-align: center;
+}
+
 .App {
 	border-top: 10px solid black;
+}
+
+.block-quote {
+	border: 2px solid gray;
+	padding:1em;
+	margin: 1em 0;
+}
+
+.gothic {
+	font-family: 'UnifrakturCook'
+}
+
+.emphasized {
+	color:red;
+	font-size:18px;
 }
 
 .machine-base {
@@ -37,12 +61,24 @@ body {
 	height: 2em;
 }
 
-.tape div.blank-tape {
+.display-tape {
+	border: 1px solid brown;
+	width: 52%;
+	margin:10px auto;
+	overflow: hidden;
+	height: 2em;
+}
+
+.display-tape .scanned {
+	background: orange;
+}
+
+.tape div.blank-tape, .display-tape div.blank-tape {
 	width: 12em;
 	height: 2em;
 }
 
-.tape div {
+.tape div, .display-tape div {
 	text-align:center;
 	float:left;
 	border-right: 2px dotted brown;

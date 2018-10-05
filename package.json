@@ -1,29 +1,49 @@
 {
+  "homepage": "http://fotoverite.github.io/what-is-a-turing-machine",
   "name": "turing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "4",
     "d3-array": "^1.2.4",
     "d3-ease": "^1.0.5",
+    "prettyjson": "^1.2.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-json-editor-ajrm": "^2.5.4",
     "react-move": "^2.8.0",
     "react-redux": "^5.0.7",
-    "react-scripts": "1.1.5",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.0.0",
     "react-select": "^2.0.0",
     "react-typing-animation": "^1.4.0",
+    "reactstrap": "^6.4.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "eslint": "^5.5.0",
-    "eslint-plugin-react": "^7.11.1"
+    "babel-plugin-rewire": "^1.2.0",
+    "eslint-plugin-react": "^7.11.1",
+    "html-loader": "^0.5.5",
+    "redux-mock-store": "^1.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "eject": "react-scripts eject",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>__tests__/setup/setupEnzyme.js",
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/setup/"
+    ]
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
