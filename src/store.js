@@ -23,7 +23,7 @@ export default function configureStore() {
 		 		description: "Print .1111111_ forever.",
 		 		operations: {
 		 			'🌂': {
-		 				steps: ['👍', '👍', '🙋'],
+		 				steps: ['👍', '🖨1'],
 		 				callback: '🌂'
 		 			}
 		 		}
@@ -32,6 +32,6 @@ export default function configureStore() {
    },
    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
    applyMiddleware(thunk)
-   
+
  );
 }

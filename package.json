@@ -22,9 +22,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "babel-plugin-rewire": "^1.2.0",
     "eslint-plugin-react": "^7.11.1",
-    "html-loader": "^0.5.5",
     "redux-mock-store": "^1.5.3"
   },
   "scripts": {

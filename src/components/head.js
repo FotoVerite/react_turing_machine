@@ -15,6 +15,7 @@ import basicOperations from '../basicOperations';
 import configurationsOptions from '../configurations'
 
 import * as actions from '../actions/actions';
+import turingMachineMovements from '../turingMachineMovements'
 
 const trackStyles = {
   top: '0em',
@@ -26,6 +27,7 @@ class HEAD extends Component {
     update: true,
     myNodeList: document.getElementsByClassName("tape-square"),
     speed: 100,
+    movements: null
   }
 
 
@@ -59,7 +61,9 @@ class HEAD extends Component {
     if(this.props.machine.bootup === false){
       this.props.bootUp();
       this.setState({ update: true });
-      setTimeout(this['startConfiguration'], this.state.speed, this.props.configurationsTable.start);
+      this.setState({ movements: turingMachineMovements(this) })
+      console.log(turingMachineMovements(this))
+      setTimeout(turingMachineMovements(this).startConfiguration, this.state.speed, this.props.configurationsTable.start);
     }
     this.props.play();
   }
@@ -78,153 +82,21 @@ class HEAD extends Component {
     this.props.startNextStep();
   }
 
-  startConfiguration = (emoji) => {
-    const configuration = this.props.configurationsTable.configurations.operations[emoji];
-    console.log('Started configuration ' + emoji + " " + configuration.name )
-
-    var stepConfiguration;
-    if(configuration.steps) {
-      stepConfiguration = this.findStepsAndCallback(configuration);
-    }
-    else {
-      const symbol = this.state.myNodeList[this.props.machine.cursor].innerText;
-      if(symbol !=='') {
-        if(configuration[symbol]) {
-          stepConfiguration = this.findStepsAndCallback(configuration, symbol);
-        }
-        else {
-          stepConfiguration = this.findStepsAndCallback(configuration, '🔣');
-        }
-      }
-      else{
-        if(configuration['🕳']) {
-          stepConfiguration = this.findStepsAndCallback(configuration, '🕳');
-        }
-        else if(configuration['0']) {
-          stepConfiguration = this.findStepsAndCallback(configuration, '0');
-        }
-      }
-    }
-    console.log('Next configuration will be ' + stepConfiguration.cb );
-
-    if(stepConfiguration.step === undefined){
-      return setTimeout(this['startConfiguration'], this.state.speed, stepConfiguration.cb);
-
-    }
-    if(stepConfiguration.step.match('🖨')){
-      const nextStep = [...stepConfiguration.step]
-      return setTimeout(this[nextStep[0]], this.state.speed, nextStep[1], stepConfiguration.stepArray, stepConfiguration.cb);
-    }
-    else {
-      return setTimeout(this[stepConfiguration.step], this.state.speed, stepConfiguration.stepArray, stepConfiguration.cb);
-    }
-  }
-
-  findStepsAndCallback = (configuration, emoji) => {
-    if(emoji !== undefined) {
-     configuration = configuration[emoji];
-    }
-    const stepArray = Object.assign([], configuration.steps)
-    const step = stepArray.shift();
-    return { stepArray: stepArray, step: step, cb: configuration.callback };
-  }
-
-  //steps
-
-  '👍' = (stepArray, cb) => {
-    const self = this.state;
-    if(self.myNodeList[this.props.machine.cursor + 1] == null) {
-      var div = document.createElement("div")
-      div.classList.add("tape-square");
-      this.state.myNodeList[0].parentNode.appendChild(div)
-    }
-    this.props.send_step('👍');
-    this.nextStep(stepArray, cb)
-  }
-
-  '👎' = (stepArray, cb) => {
-    const self = this.state;
-    this.props.send_step('👎');
-    this.nextStep(stepArray, cb)
-  }
-
-
-  '🖨' = (symbol, stepArray, cb) => {
-    this.props.send_step('🖨', symbol);
-    var node= this.state.myNodeList[this.props.machine.cursor];
-    node.innerHTML  = symbol;
-    this.nextStep(stepArray, cb)
-  }
-
-  '🙋' = (stepArray, cb) => {
-    this.props.send_step('🙋');
-    var node= this.state.myNodeList[this.props.machine.cursor];
-    node.innerHTML  = '1';
-    this.nextStep(stepArray, cb)
-  }
-
-  '⭕' = (stepArray, cb) => {
-    this.props.send_step('⭕');
-    var node= this.state.myNodeList[this.props.machine.cursor];
-    node.innerHTML  = '0';
-    this.nextStep(stepArray, cb)
-  }
-
-  '🕳' = (stepArray, cb) => {
-    this.props.send_step('🕳');
-    var node = this.state.myNodeList[this.props.machine.cursor];
-    node.innerHTML  = '';
-    this.nextStep(stepArray, cb)
-  }
-
-  nextStep = (stepArray, cb) => {
-    this.setState({ update: true });
-    if(this.props.machine.speed === 'steps') {
-      if(this.props.machine.startNextStep) {
-        //continue
-      } 
-      else {
-        setTimeout(this.nextStep, this.state.speed, stepArray, cb);
-        return;
-      }     
-    }
-    if(this.props.machine.speed !== 'stopped') {
-      //continue
-    } 
-    else {
-      setTimeout(this.nextStep, this.state.speed, stepArray, cb);
-      return;
-    }     
-    if(stepArray.length > 0) {
-      const step = stepArray.shift();
-      if(step.match('🖨')){
-        const nextStep = [...step]
-        setTimeout(this[nextStep[0]], this.state.speed, nextStep[1], stepArray, cb);
-      }
-      else {
-        setTimeout(this[step], this.state.speed, stepArray, cb);
-      }
-    }
-    else {
-      setTimeout(this['startConfiguration'], this.state.speed, cb);
-    }
-  }
-
   render() {
     const { selectedOption } = this.state;
 
     return (
       <div>
-        <textarea 
+        <textarea
           value= {JSON.stringify(this.props.configurationsTable)}
           style= {{
-            height: 1000, 
+            height: 1000,
             width: 300
           }}
         />
 
         <div style={{
-          float: 'right', 
+          float: 'right',
           width: '65%'
         }}>
         <div className="machine-base">
@@ -280,12 +152,12 @@ class HEAD extends Component {
             {(state) => {
               const { tapePosition } = state;
 
-          
+
               var tape = [];
               for (let i=0; i < 10; i++) {
                 tape.push(<div className='blank-square tape-square' key={i} />)
               }
-          
+
 
               return (
 
@@ -298,14 +170,14 @@ class HEAD extends Component {
                 >
                   <div className="blank-tape">
                   </div>
-                 
+
                   {tape}
                 </div>
               );
             }}
           </Animate>
 
-          <input 
+          <input
             style={{
               marginLeft: '1em',
               padding: '0.5em',
@@ -316,7 +188,7 @@ class HEAD extends Component {
             }}
             value={this.props.machine.steps.length }
           />
-         <div style={{ 
+         <div style={{
           marginTop: '2em',
           float: 'left',
           width: '25em',
@@ -348,7 +220,7 @@ class HEAD extends Component {
           <img src={rightArrow} className="" alt="power-button" />
           </button>
 
-        <p>Output: 
+        <p>Output:
           Binary: {this.props.machine.output} <br />
           Integer: {parseInt(this.props.machine.output, 2)} <br />
         </p>

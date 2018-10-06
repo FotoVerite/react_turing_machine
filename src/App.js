@@ -39,12 +39,12 @@ class App extends Component {
       isOpen: !this.state.isOpen
     });
   }
-       
+
 
  render() {
 
   return (
-  
+
    <div className="App">
     <Navbar color="dark" dark expand="md">
       <NavbarBrand href="/">What Is a Turing Machine</NavbarBrand>
@@ -67,9 +67,12 @@ class App extends Component {
       <div>
         <Route exact path="/" component={Intro} />
         <Route path="/chapter-1/" component={chapterOne} />
+        <Route path="/admin/" component={Head} />
       </div>
     </Router>
-  
+    <footer>
+    </footer>
+
    </div>
   );
  }

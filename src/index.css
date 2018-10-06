@@ -107,3 +107,14 @@ button {
 	text-align: left;
 	margin-right:24px;
 }
+
+.machine-container {
+	position:relative;
+	width: 100%;
+	overflow:hidden;
+}
+
+footer {
+	height:100px;
+	background: red;
+}

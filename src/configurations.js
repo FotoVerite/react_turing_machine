@@ -1,11 +1,11 @@
 export default {
- 	
+
     '🌂': {
       start: '🌂',
    		description: "Print .1111111_ forever.",
    		operations: {
    			'🌂': {
-            steps: ['👍', '👍', '🙋'],
+            steps: ['👍', '🖨1'],
    				callback: '🌂'
    			}
    		}
@@ -79,7 +79,7 @@ export default {
       },
       '👾': {
           'x': {
-            steps: ['🕳', '👍'],
+            steps: ['🖨🕳', '👍'],
             callback: '⚗'
           },
           '🍔': {
@@ -368,10 +368,10 @@ export default {
         '🚛': {
           name: 'erase-old-y',
           'y': {
-            steps: ['🕳', '👎', '👎'],
+            steps: ['🖨🕳', '👎', '👎'],
             callback: '🎨'
           },
-    
+
           '🔣': {
             steps: ['👍', '👍'],
             callback: '🚛'
@@ -387,7 +387,7 @@ export default {
             steps: ['👍'],
             callback: '🎟'
           },
-    
+
           '🔣': {
             steps: ['🖨y', '👍'],
             callback: '😲'
@@ -403,7 +403,7 @@ export default {
             steps: ['👍', '🖨x'],
             callback: '👟'
           },
-    
+
           '🔣': {
             steps: ['👍', '👍'],
             callback: '😲'
@@ -419,7 +419,7 @@ export default {
             steps: ['🖨w','👍', '👍'],
             callback: '⚛'
           },
-    
+
           '🔣': {
             steps: ['👍', '👍'],
             callback: '👟'
@@ -439,7 +439,7 @@ export default {
             steps: ['🖨u','👍', '👍'],
             callback: '⚛'
           },
-    
+
           '🔣': {
             steps: [],
             callback: '⚓'
@@ -455,7 +455,7 @@ export default {
             steps: ['👍'],
             callback: '🏧'
           },
-    
+
           '🔣': {
             steps: ['👎'],
             callback: '🍆'
@@ -468,12 +468,12 @@ export default {
         '🏧': {
           name: 'print-zero-digit',
           '0': {
-            steps: ['👍', '🕳', '👍'],
+            steps: ['👍', '🖨🕳', '👍'],
             callback: '🏧'
           },
-    
+
           '1': {
-            steps: ['👍', '🕳', '👍'],
+            steps: ['👍', '🖨🕳', '👍'],
             callback: '🏧'
           },
           '🕳': {
@@ -487,7 +487,7 @@ export default {
             steps: ['👍'],
             callback: '❓'
           },
-    
+
           '🔣': {
             steps: ['👎'],
             callback: '🎟'
@@ -500,12 +500,12 @@ export default {
         '❓': {
           name: 'print-digit-one',
           '0': {
-            steps: ['👍', '🕳', '👍'],
+            steps: ['👍', '🖨🕳', '👍'],
             callback: '❓'
           },
-    
+
           '1': {
-            steps: ['👍', '🕳', '👍'],
+            steps: ['👍', '🖨🕳', '👍'],
             callback: '❓'
           },
           '🕳': {
@@ -519,7 +519,7 @@ export default {
             callback: '⏰'
           },
           '🔣': {
-            steps: ['🕳', '👍', '👍'],
+            steps: ['🖨🕳', '👍', '👍'],
             callback: '📎'
           }
         }
