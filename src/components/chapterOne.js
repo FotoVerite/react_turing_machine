@@ -270,7 +270,7 @@ class chapterOne extends PureComponent {
             (called figures) consists entirely of 0 and 1 (the others being called symbols of
             the second kind), then the machine will be called a computing machine.
             If the machine is supplied with a blank tape and set in motion, starting
-            from the correct initial ra-configuration, the subsequence of the sjinbols
+            from the correct initial ra-configuration, the subsequence of the symbols
             printed by it which are of the first kind will be called the sequence computed
             by the machine. The real number whose expression as a binary decimal is
             obtained by prefacing this sequence by a decimal point is called the
@@ -309,14 +309,26 @@ of the second kind, but cannot print any more symbols of the first kind.
             Circular machines here are in some fundamental way broken. Their m-configurations are made in some way that a q<subscript>n</subscript>'s callback plus scanned symbol doesn't have an entry or their m-configuration leads to a loop where no more 0 or 1's or ever printed onto the tape. Notice that there he is very clear that there is no possible move. Not that there is a halt state. Turing does not consider that there can be configuration that ends the machine. The machine is supposed to go on forever. In fact the word is not even mentioned in the paper. I emphasize this point because so many examples of turing machines include the ability for the machine to halt. But that is later addition added onto the concept seperate from this paper and the how Turing thought about the concept of computational machines. This is why he is using circular to describe these machines. They are stuck in a broken loop and not continuing on a valid path. The naming convention still sucks though.
         </p>
         <p>
-          So lets reiterate what we have so for. Turing has described the concept of a computational machine. It's input and output exists on a piece of tape of infinite size. It is automatic and should print out figures for an infinite amount of time. It does this by a finite configurations of movements which he labels m-configurations. The machine has no understanding sense of state but can scan a symbol that is in the machine itself.
+          So lets reiterate what we have so for. Turing has described the concept of a computational machine. 
+          It's input and output exists on a piece of tape. 
+          The machine configuration movements are automatic and should print out figures for an infinite amount of time.
+          This tape must be considered infinite since the machine writes down an infinite amount of figures. 
+          It does this by a finite configurations of movements which he labels m-configurations.
+          Finally the machine has no understanding sense of state but can scan a symbol that is in the machine itself.
+          Only a human looking at the machine can fully gage what it has done.
         </p>
-
 
         <p className={"emphasized"}>All this monotnous detail I think is why so many people simplify what a Turing machine is.
         The paper is torture but groking the intricacies helps with understanding why it is important</p>
 
-      <Machine/>
+        <p>
+         But how does this actually all fit together. While Turing is very throughough is explaining the details of the machine. 
+         How it actually works might still be kinda confusing. Lets look at a simulation of a Turing machine to see how all these pieces fit together. 
+        </p>
+
+        <p>
+        <a href="/chapter-2/">The very most simple 'Turing Machine'</a>
+        </p>
       </div>
     );
   }

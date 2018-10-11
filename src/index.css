@@ -20,6 +20,10 @@ p {
 	clear: both;
 }
 
+.hidden {
+	display: none;
+}
+
 .center {
 	text-align: center;
 }
@@ -44,11 +48,11 @@ p {
 }
 
 .machine-base {
-	margin-top:50px;
 	margin-left:20px;
 	border: 1px solid black;
+	border-top: none;
 	width: 10em;
-	height: 40em;
+	height: 350px;
 	margin-bottom: 5em;
 }
 
@@ -57,8 +61,11 @@ p {
 	position: absolute;
 	top: 30%;
 	border: 1px solid brown;
+	border-right:none;
+	border-left: none;
 	width: 100%;
 	height: 2em;
+	background: white;
 }
 
 .display-tape {
@@ -66,7 +73,7 @@ p {
 	width: 52%;
 	margin:10px auto;
 	overflow: hidden;
-	height: 2em;
+	height: 34px;
 }
 
 .display-tape .scanned {
@@ -75,15 +82,15 @@ p {
 
 .tape div.blank-tape, .display-tape div.blank-tape {
 	width: 12em;
-	height: 2em;
+	height: 31px;
 }
 
 .tape div, .display-tape div {
 	text-align:center;
 	float:left;
 	border-right: 2px dotted brown;
-	height:2em;
-	width: 2em;
+	height:31px;
+	width: 33px;
 }
 
 button {
@@ -117,4 +124,24 @@ button {
 footer {
 	height:100px;
 	background: red;
+}
+
+
+div.log h2 {
+	font-size:18px;
+}
+
+div.log p {
+	font-size:14px;
+}
+
+div.log .display-tape {
+	margin: 0px;
+	height:25px;
+	width: 100%;
+}
+
+div.log .display-tape div.blank-tape {
+	width: 12em;
+	height: 10px;
 }

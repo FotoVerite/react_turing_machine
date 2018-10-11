@@ -7,6 +7,7 @@
     "bootstrap": "4",
     "d3-array": "^1.2.4",
     "d3-ease": "^1.0.5",
+    "immutability-helper": "^2.8.1",
     "prettyjson": "^1.2.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",

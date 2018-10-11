@@ -1,14 +1,89 @@
+import update from 'immutability-helper';
+
 let turingMachineMovements
+
 export default turingMachineMovements = (machine) => {
 
   let props = machine.props
   let state = machine.state
+  let configurationsCalled = 0
+
+  const setStateForThisConfiguration = () => {
+    machine.setState({
+      configurationsCalled: update(
+        machine.state.configurationsCalled, {
+          [configurationsCalled]: {$set: {
+            configurationName: "",
+            configurationStepsCalled: [],
+            reverse: [],
+            stateOfMachine: [],
+            cursorIndex: 0, 
+            callback: null
+          }
+        }
+      })
+    })
+  }
+
+  const setNameForThisConfiguration = (name) => {
+    machine.setState({
+      configurationsCalled: update(
+        machine.state.configurationsCalled, {
+          [configurationsCalled]: {configurationName: {$set: name}
+        }
+      })
+    })
+  }
+
+  const setStepForThisConfiguration = (step, reverse) => {
+    machine.setState({
+      configurationsCalled: update(
+        machine.state.configurationsCalled, {
+          [configurationsCalled]: {
+            configurationStepsCalled: {
+              $push: [step]
+            },
+            reverse: {
+              $push: [reverse]
+            }
+        }
+      })
+    })
+  }
+
+  const setStateOfMachineForThisConfiguration = (index) => {
+    machine.setState({
+      configurationsCalled: update(
+        machine.state.configurationsCalled, {
+          [configurationsCalled]: {
+            stateOfMachine: {$set: [...document.getElementById(state.uuid).getElementsByClassName('tape-square')].map(t => t.innerHTML)  
+          },
+          cursorIndex: {$set: index
+
+          }
+        }
+      })
+    })
+  }
+
+  const setCallbackOfMachineForThisConfiguration = (cb) => {
+    machine.setState({
+      configurationsCalled: update(
+        machine.state.configurationsCalled, {
+          [configurationsCalled]: {callback: {$set: cb}
+        }
+      })
+    })
+  }
 
   const startConfiguration = (emoji) => {
+    configurationsCalled += 1
+    setStateForThisConfiguration()
     const configuration = props.configurationsTable.configurations.operations[emoji];
-
     const configurationName = configuration.name || 'Unnamed'
-    console.log('Started configuration ' + emoji + " " + configurationName )
+    var isDoing = 'Started configuration ' + emoji + " " + configurationName
+    setNameForThisConfiguration(configurationName)
+    console.log(isDoing)
 
     var configurationMovement = findConfigurationMovement(configuration);
 
@@ -90,12 +165,15 @@ export default turingMachineMovements = (machine) => {
       }
     }
     else {
+      setStateOfMachineForThisConfiguration(props.machine.cursor)
+      setCallbackOfMachineForThisConfiguration(cb)
       setTimeout(startConfiguration, state.speed, cb);
     }
   }
 
   turingMachineMovements["👍"] = (stepArray, cb) => {
     console.log("Moving Right")
+    setStepForThisConfiguration("Moving Right", "👎")
     if(state.myNodeList[props.machine.cursor + 1] == null) {
       var div = document.createElement("div")
       div.classList.add("tape-square");
@@ -106,6 +184,7 @@ export default turingMachineMovements = (machine) => {
   }
 
   turingMachineMovements["👎"] = (stepArray, cb) => {
+    setStepForThisConfiguration("Moving Left", "👍")
     props.send_step('👎');
     nextStep(stepArray, cb)
   }
@@ -117,6 +196,7 @@ export default turingMachineMovements = (machine) => {
     }
     props.send_step('🖨', symbol);
     var node= state.myNodeList[props.machine.cursor];
+    setStepForThisConfiguration("Printing symbol " + symbol, node.innerHTML)
     node.innerHTML  = symbol;
     nextStep(stepArray, cb)
   }

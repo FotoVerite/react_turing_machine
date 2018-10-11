@@ -17,6 +17,7 @@ import {
 
 import Intro from './components/intro'
 import chapterOne from './components/chapterOne'
+import chapterTwo from './components/chapterTwo'
 
 import Head from './components/head'
 import Output from './components/output'
@@ -67,6 +68,7 @@ class App extends Component {
       <div>
         <Route exact path="/" component={Intro} />
         <Route path="/chapter-1/" component={chapterOne} />
+        <Route path="/chapter-2/" component={chapterTwo} />
         <Route path="/admin/" component={Head} />
       </div>
     </Router>

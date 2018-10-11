@@ -9,9 +9,20 @@ import powerButton from '../images/powerStandby.svg'
 import stopImg from '../images/stop.svg'
 import rightArrow from '../images/rightArrow.svg'
 import * as actions from '../actions/actions';
+import MachineLog from './machineLog'
 import turingMachineMovements from '../turingMachineMovements'
-const uuidv1 = require('uuid/v1');
+import Typing from 'react-typing-animation';
 
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button
+} from "reactstrap";
+
+
+const uuidv1 = require('uuid/v1');
 const trackStyles = {
   top: '0em',
   position: 'absolute',
@@ -24,7 +35,9 @@ class Machine extends Component {
     uuid: this.uuid,
     update: true,
     speed: 100,
-    movements: null
+    movements: null,
+    modal: false,
+    configurationsCalled: {}
   }
 
   componentDidMount() {
@@ -34,6 +47,12 @@ class Machine extends Component {
         .getElementsByClassName("tape-square")
       }
     )
+  }
+
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   stop = () => {
@@ -48,8 +67,6 @@ class Machine extends Component {
     if(this.props.machine.bootup === false){
       this.props.bootUp();
       this.setState({ update: true });
-      this.setState({ movements: turingMachineMovements(this) })
-      console.log(turingMachineMovements(this))
       setTimeout(turingMachineMovements(this).startConfiguration, this.state.speed, this.props.configurationsTable.start);
     }
     this.props.play();
@@ -63,7 +80,7 @@ class Machine extends Component {
   handleStep = () => {
     if(this.props.machine.bootup === false){
       this.props.bootUp();
-      setTimeout(this['startConfiguration'], this.state.speed, this.props.configurationsTable.start);
+      setTimeout(turingMachineMovements(this).startConfiguration, this.state.speed, this.props.configurationsTable.start);
     }
     this.setState({ update: true });
     this.props.startNextStep();
@@ -102,8 +119,8 @@ class Machine extends Component {
                       position: 'absolute',
                       zIndex: 5,
                       width: '2em',
-                      height: '34em',
-                      borderRadius: 4,
+                      height: '225px',
+                      borderRadius: '0px 0px 4px 4px',
                       opacity: 0.7,
                       backgroundColor: '#000000',
                       WebkitTransform: `translate3d(${headPosition}px, 0, 0)`,
@@ -152,37 +169,61 @@ class Machine extends Component {
               );
             }}
           </Animate>
+          <div style={{
+              border: '1px solid black',
+              position: 'absolute', 
+              top: 300, 
+              right: 100
+            }}>
+              Output:
+              Binary: {this.props.machine.output || 0} <br />
+              Integer: {parseInt(this.props.machine.output, 2) || 0} <br />
+            <label>Step:</label>
+            <input
+              style={{
+                marginLeft: '1em',
+                padding: '0.5em',
+                borderRadius: 5,
+                height: '2em',
+                clear: "both"
+              }}
+              value={this.props.machine.steps.length }
+            />
+            <br />
+            <Button onClick={this.toggleModal}>
+             Log
+            </Button>
+          </div>
 
-          <input
-            style={{
-              marginLeft: '1em',
-              padding: '0.5em',
-              borderRadius: 5,
-              height: '2em',
-              float: 'left',
-              clear: "both"
-            }}
-            value={this.props.machine.steps.length }
-          />
+
+
         <div className="clearfix" ></div>
 
          <button
             onClick={this.props.machine.speed === 'normal' ? this.stop : this.handleClick}
-            className='powerButton'
+            className= { this.props.showPlay ? 'powerButton' : 'powerButton hidden'}
           >
           <img src={this.props.machine.speed === 'normal' ? stopImg : powerButton} className="" alt="power-button" />
           </button>
           <button
             onClick={this.handleStep}
-            className='powerButton'
+            className={'powerButton'}
           >
           <img src={rightArrow} className="" alt="power-button" />
           </button>
 
-        <p>Output:
-          Binary: {this.props.machine.output} <br />
-          Integer: {parseInt(this.props.machine.output, 2)} <br />
-        </p>
+
+
+        <Modal isOpen={this.state.modal} toggle={this.toggleModal} >
+          <ModalHeader toggle={this.toggle}>Movements</ModalHeader>
+          <ModalBody>
+            <MachineLog configurationsCalled={this.state.configurationsCalled} /> 
+          </ModalBody>
+          <ModalFooter>
+          </ModalFooter>
+        </Modal>
+
+      
       </div>
     );
   }
@@ -191,4 +232,9 @@ const stateToProps = function(state) {
   return Object.assign({}, state);
 };
 
-export default connect(stateToProps, actions)(Machine);
+const mergeProps =  (stateProps, dispatchProps, ownProps) => {
+  return Object.assign({showPlay: true}, stateProps, dispatchProps, ownProps)
+}
+
+
+export default connect(stateToProps, actions, mergeProps)(Machine);

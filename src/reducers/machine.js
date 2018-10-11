@@ -5,7 +5,7 @@ export default (state = {}, action) => {
 	  		state,
 	  		{ 
 	  			bootup: true,
-	  			headPosition: state.headPosition + 111
+	  			headPosition: state.headPosition + 107
 	  		}
 	  	)
 	  case 'play': 
@@ -36,7 +36,7 @@ export default (state = {}, action) => {
 	  		object = Object.assign(
 		  		state,
 		  		{ 
-		  			tapePosition: state.tapePosition - 34,
+		  			tapePosition: state.tapePosition - 33,
 		  		}
 		  	)
 
@@ -45,7 +45,7 @@ export default (state = {}, action) => {
 	  		object = Object.assign(
 		  		state,
 		  		{ 
-		  			headPosition: state.headPosition + 34,
+		  			headPosition: state.headPosition + 33,
 		  		}
 		  	)
 
