@@ -20,15 +20,15 @@ self.__precacheManifest = [
     "url": "/react_turing_machine/static/js/runtime~main.dc4c57e1.js"
   },
   {
-    "revision": "41082792abb43fbcd138",
-    "url": "/react_turing_machine/static/js/main.41082792.chunk.js"
+    "revision": "e98a0274d8e0e5b7553e",
+    "url": "/react_turing_machine/static/js/main.e98a0274.chunk.js"
   },
   {
     "revision": "a0ae188e3a1f715bb46b",
     "url": "/react_turing_machine/static/js/1.a0ae188e.chunk.js"
   },
   {
-    "revision": "41082792abb43fbcd138",
+    "revision": "e98a0274d8e0e5b7553e",
     "url": "/react_turing_machine/static/css/main.cdbb7789.chunk.css"
   },
   {
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/react_turing_machine/static/css/1.50582556.chunk.css"
   },
   {
-    "revision": "279c94f5363acf973fe23e169ec3a7ce",
+    "revision": "5d1da54ec2e3b1cdda2d8f792ba17d1b",
     "url": "/react_turing_machine/index.html"
   }
 ];

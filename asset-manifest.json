@@ -1,7 +1,7 @@
 {
   "main.css": "/react_turing_machine/static/css/main.cdbb7789.chunk.css",
-  "main.js": "/react_turing_machine/static/js/main.41082792.chunk.js",
-  "main.js.map": "/react_turing_machine/static/js/main.41082792.chunk.js.map",
+  "main.js": "/react_turing_machine/static/js/main.e98a0274.chunk.js",
+  "main.js.map": "/react_turing_machine/static/js/main.e98a0274.chunk.js.map",
   "static/css/1.50582556.chunk.css": "/react_turing_machine/static/css/1.50582556.chunk.css",
   "static/js/1.a0ae188e.chunk.js": "/react_turing_machine/static/js/1.a0ae188e.chunk.js",
   "static/js/1.a0ae188e.chunk.js.map": "/react_turing_machine/static/js/1.a0ae188e.chunk.js.map",
@@ -11,9 +11,9 @@
   "static/media/rightArrow.svg": "/react_turing_machine/static/media/rightArrow.dca2aa7f.svg",
   "static/media/index.css": "/react_turing_machine/static/media/MaxterBoardSt.5e31aada.ttf",
   "static/media/stop.svg": "/react_turing_machine/static/media/stop.d4a81458.svg",
-  "static/css/1.50582556.chunk.css.map": "/react_turing_machine/static/css/1.50582556.chunk.css.map",
   "static/css/main.cdbb7789.chunk.css.map": "/react_turing_machine/static/css/main.cdbb7789.chunk.css.map",
+  "static/css/1.50582556.chunk.css.map": "/react_turing_machine/static/css/1.50582556.chunk.css.map",
   "index.html": "/react_turing_machine/index.html",
-  "precache-manifest.51cc52a6493aa85944ebb38b7021d9f5.js": "/react_turing_machine/precache-manifest.51cc52a6493aa85944ebb38b7021d9f5.js",
+  "precache-manifest.55ad2b44d41563f482852ce057af2f3e.js": "/react_turing_machine/precache-manifest.55ad2b44d41563f482852ce057af2f3e.js",
   "service-worker.js": "/react_turing_machine/service-worker.js"
 }
