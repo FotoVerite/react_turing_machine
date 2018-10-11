@@ -327,7 +327,7 @@ of the second kind, but cannot print any more symbols of the first kind.
         </p>
 
         <p>
-        <a href="/chapter-2/">The very most simple 'Turing Machine'</a>
+        <a href={`${process.env.PUBLIC_URL}/chapter-2/`}>The very most simple 'Turing Machine'</a>
         </p>
       </div>
     );

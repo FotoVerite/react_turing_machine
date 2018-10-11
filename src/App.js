@@ -57,7 +57,7 @@ class App extends Component {
               Chapters
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem><NavLink href="/chapter-1/">Chapter 1</NavLink></DropdownItem>
+              <DropdownItem><NavLink href={`${process.env.PUBLIC_URL}/chapter-1/`}>Chapter 1</NavLink></DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
@@ -66,10 +66,9 @@ class App extends Component {
 
      <Router basename={process.env.PUBLIC_URL}>
       <div>
-        <Route exact path="/" component={Intro} />
-        <Route path="/chapter-1/" component={chapterOne} />
-        <Route path="/chapter-2/" component={chapterTwo} />
-        <Route path="/admin/" component={Head} />
+        <Route exact path={`${process.env.PUBLIC_URL}/`} component={Intro} />
+        <Route path={`${process.env.PUBLIC_URL}/chapter-1/`} component={chapterOne} />
+        <Route path={`${process.env.PUBLIC_URL}/chapter-2/`} component={chapterTwo} />
       </div>
     </Router>
     <footer>
