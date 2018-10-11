@@ -64,7 +64,7 @@ class App extends Component {
       </Collapse>
     </Navbar>
 
-     <Router>
+     <Router basename={process.env.PUBLIC_URL}>
       <div>
         <Route exact path="/" component={Intro} />
         <Route path="/chapter-1/" component={chapterOne} />
