@@ -32,7 +32,7 @@ class Intro extends PureComponent {
         <p className={"emphasized"}>Well as easy as possible given the complexitity and general leaps in logic given to the source material.</p>
         
         <ul className="list-group">
-          <li className="list-group-item"><a href="/chapter-1/">Why this site?</a></li>
+          <li className="list-group-item"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>Why this site?</a></li>
           <li className="list-group-item">Dapibus ac facilisis in</li>
           <li className="list-group-item">Morbi leo risus</li>
           <li className="list-group-item">Porta ac consectetur ac</li>
