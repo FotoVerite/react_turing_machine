@@ -1,10 +1,10 @@
 {
   "main.css": "/react_turing_machine/static/css/main.cdbb7789.chunk.css",
-  "main.js": "/react_turing_machine/static/js/main.e98a0274.chunk.js",
-  "main.js.map": "/react_turing_machine/static/js/main.e98a0274.chunk.js.map",
+  "main.js": "/react_turing_machine/static/js/main.217ecb39.chunk.js",
+  "main.js.map": "/react_turing_machine/static/js/main.217ecb39.chunk.js.map",
   "static/css/1.50582556.chunk.css": "/react_turing_machine/static/css/1.50582556.chunk.css",
-  "static/js/1.a0ae188e.chunk.js": "/react_turing_machine/static/js/1.a0ae188e.chunk.js",
-  "static/js/1.a0ae188e.chunk.js.map": "/react_turing_machine/static/js/1.a0ae188e.chunk.js.map",
+  "static/js/1.e6e759e0.chunk.js": "/react_turing_machine/static/js/1.e6e759e0.chunk.js",
+  "static/js/1.e6e759e0.chunk.js.map": "/react_turing_machine/static/js/1.e6e759e0.chunk.js.map",
   "runtime~main.js": "/react_turing_machine/static/js/runtime~main.dc4c57e1.js",
   "runtime~main.js.map": "/react_turing_machine/static/js/runtime~main.dc4c57e1.js.map",
   "static/media/powerStandby.svg": "/react_turing_machine/static/media/powerStandby.161f31d4.svg",
@@ -14,6 +14,6 @@
   "static/css/main.cdbb7789.chunk.css.map": "/react_turing_machine/static/css/main.cdbb7789.chunk.css.map",
   "static/css/1.50582556.chunk.css.map": "/react_turing_machine/static/css/1.50582556.chunk.css.map",
   "index.html": "/react_turing_machine/index.html",
-  "precache-manifest.55ad2b44d41563f482852ce057af2f3e.js": "/react_turing_machine/precache-manifest.55ad2b44d41563f482852ce057af2f3e.js",
+  "precache-manifest.9868c150968d3ed811a5c282a4fcc725.js": "/react_turing_machine/precache-manifest.9868c150968d3ed811a5c282a4fcc725.js",
   "service-worker.js": "/react_turing_machine/service-worker.js"
 }
