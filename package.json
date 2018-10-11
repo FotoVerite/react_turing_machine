@@ -1,12 +1,13 @@
 {
-  "homepage": "http://fotoverite.github.io/what-is-a-turing-machine",
+  "homepage": "https://github.com/FotoVerite/react_turing_machine",
   "name": "turing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "4",
+    "bootstrap": "4.1.2",
     "d3-array": "^1.2.4",
     "d3-ease": "^1.0.5",
+    "gh-pages": "^2.0.1",
     "immutability-helper": "^2.8.1",
     "prettyjson": "^1.2.1",
     "react": "^16.5.0",
@@ -27,6 +28,8 @@
     "redux-mock-store": "^1.5.3"
   },
   "scripts": {
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
