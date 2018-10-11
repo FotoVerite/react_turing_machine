@@ -6,7 +6,7 @@ export function bootUp() {
 
 export function send() {
   return {
-    type: '👍'
+    type: '➡'
   };
 }
 

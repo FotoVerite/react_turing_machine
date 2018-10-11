@@ -22,7 +22,7 @@ export default (state = {}, action) => {
 		  			speed: 'stopped'
 		  		}
 		  	)
-  	case '👍':
+  	case '➡':
 	  	var object = Object.assign(
 	  		state,
 	  		{ 
@@ -51,7 +51,7 @@ export default (state = {}, action) => {
 
 	  	}
 	  	return object
-	  case '👎':
+	  case '⬅':
 	  	var object = Object.assign(
 	  		state,
 	  		{ 

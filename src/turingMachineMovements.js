@@ -79,7 +79,7 @@ export default turingMachineMovements = (machine) => {
   const startConfiguration = (emoji) => {
     configurationsCalled += 1
     setStateForThisConfiguration()
-    const configuration = props.configurationsTable.configurations.operations[emoji];
+    const configuration = props.configurationsTable.configurations[emoji];
     const configurationName = configuration.name || 'Unnamed'
     var isDoing = 'Started configuration ' + emoji + " " + configurationName
     setNameForThisConfiguration(configurationName)
@@ -171,21 +171,21 @@ export default turingMachineMovements = (machine) => {
     }
   }
 
-  turingMachineMovements["👍"] = (stepArray, cb) => {
+  turingMachineMovements["➡"] = (stepArray, cb) => {
     console.log("Moving Right")
-    setStepForThisConfiguration("Moving Right", "👎")
+    setStepForThisConfiguration("Moving Right", "⬅")
     if(state.myNodeList[props.machine.cursor + 1] == null) {
       var div = document.createElement("div")
       div.classList.add("tape-square");
       state.myNodeList[0].parentNode.appendChild(div)
     }
-    props.send_step('👍');
+    props.send_step('➡');
     nextStep(stepArray, cb)
   }
 
-  turingMachineMovements["👎"] = (stepArray, cb) => {
-    setStepForThisConfiguration("Moving Left", "👍")
-    props.send_step('👎');
+  turingMachineMovements["⬅"] = (stepArray, cb) => {
+    setStepForThisConfiguration("Moving Left", "➡")
+    props.send_step('⬅');
     nextStep(stepArray, cb)
   }
 

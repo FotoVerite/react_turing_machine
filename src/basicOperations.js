@@ -1,28 +1,28 @@
 export default [
 
 	{
-		'👍': {
+		'➡': {
 			description: "Move Head one space forward.",
 			forward: {
-				action: '👍',
+				action: '➡',
 				output: "Moving head forward"
 			},
 			rewind: {
-				action: '👎',
+				action: '⬅',
 				output: "Moving head backwards"
 			}
 		}
 	},
 
 	{
-			'👎': {
+			'⬅': {
 			description: "Move Head one space backward.",
 			forward: {
-				action: '👎',
+				action: '⬅',
 				output: "Moving head backwards"
 			},
 			rewind: {
-				action: '👍',
+				action: '➡',
 				output: "Moving head forwards"
 			}
 		}

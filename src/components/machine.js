@@ -53,6 +53,7 @@ class Machine extends Component {
     this.setState({
       modal: !this.state.modal
     });
+    this.props.stop();
   }
 
   stop = () => {
@@ -172,6 +173,7 @@ class Machine extends Component {
           <div style={{
               border: '1px solid black',
               position: 'absolute', 
+              padding:20,
               top: 300, 
               right: 100
             }}>
@@ -190,7 +192,7 @@ class Machine extends Component {
               value={this.props.machine.steps.length }
             />
             <br />
-            <Button onClick={this.toggleModal}>
+            <Button color="primary" size="sm" onClick={this.toggleModal}>
              Log
             </Button>
           </div>
@@ -207,7 +209,7 @@ class Machine extends Component {
           </button>
           <button
             onClick={this.handleStep}
-            className={'powerButton'}
+            className={ this.props.showStepForward ? 'powerButton' : 'powerButton hidden'}
           >
           <img src={rightArrow} className="" alt="power-button" />
           </button>
@@ -233,7 +235,7 @@ const stateToProps = function(state) {
 };
 
 const mergeProps =  (stateProps, dispatchProps, ownProps) => {
-  return Object.assign({showPlay: true}, stateProps, dispatchProps, ownProps)
+  return Object.assign({showPlay: true, showStepForward: true}, stateProps, dispatchProps, ownProps)
 }
 
 

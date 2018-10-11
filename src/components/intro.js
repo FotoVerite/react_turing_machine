@@ -33,9 +33,8 @@ class Intro extends PureComponent {
         
         <ul className="list-group">
           <li className="list-group-item"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>Why this site?</a></li>
-          <li className="list-group-item">Dapibus ac facilisis in</li>
-          <li className="list-group-item">Morbi leo risus</li>
-          <li className="list-group-item">Porta ac consectetur ac</li>
+          <li className="list-group-item"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>A simple Turing Machine</a></li>
+          <li className="list-group-item"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>A Complex Turing Machine</a></li>
         </ul>
       </div>
     );

@@ -55,7 +55,7 @@ const turingNumber = (configuration) => {
             const printSymbol = [...symbolOperation.steps[0]][1]
             symbolOperationNumber += "D"
             symbolOperationNumber += "C".repeat(printSymbol) 
-            if(symbolOperation.steps[1] === '👍') {
+            if(symbolOperation.steps[1] === '➡') {
               symbolOperationNumber += "R"
             }
             else {

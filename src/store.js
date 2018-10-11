@@ -23,7 +23,7 @@ export default function configureStore() {
 		 		description: "Print .1111111_ forever.",
 		 		operations: {
 		 			'🌂': {
-		 				steps: ['👍', '🖨1'],
+		 				steps: ['➡', '🖨1'],
 		 				callback: '🌂'
 		 			}
 		 		}

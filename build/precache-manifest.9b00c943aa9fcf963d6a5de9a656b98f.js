@@ -20,23 +20,23 @@ self.__precacheManifest = [
     "url": "/react_turing_machine/static/js/runtime~main.dc4c57e1.js"
   },
   {
-    "revision": "e98a0274d8e0e5b7553e",
-    "url": "/react_turing_machine/static/js/main.e98a0274.chunk.js"
+    "revision": "d19aedec6562ae24cab5",
+    "url": "/react_turing_machine/static/js/main.d19aedec.chunk.js"
   },
   {
-    "revision": "a0ae188e3a1f715bb46b",
-    "url": "/react_turing_machine/static/js/1.a0ae188e.chunk.js"
+    "revision": "1297b2401c9fc1e105e9",
+    "url": "/react_turing_machine/static/js/1.1297b240.chunk.js"
   },
   {
-    "revision": "e98a0274d8e0e5b7553e",
-    "url": "/react_turing_machine/static/css/main.cdbb7789.chunk.css"
+    "revision": "d19aedec6562ae24cab5",
+    "url": "/react_turing_machine/static/css/main.ae7dd75f.chunk.css"
   },
   {
-    "revision": "a0ae188e3a1f715bb46b",
-    "url": "/react_turing_machine/static/css/1.50582556.chunk.css"
+    "revision": "1297b2401c9fc1e105e9",
+    "url": "/react_turing_machine/static/css/1.83dabc11.chunk.css"
   },
   {
-    "revision": "5d1da54ec2e3b1cdda2d8f792ba17d1b",
+    "revision": "fb2005f6d1fa5de5c01ea8196662eeef",
     "url": "/react_turing_machine/index.html"
   }
 ];
