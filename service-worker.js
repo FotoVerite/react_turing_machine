@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/FotoVerite/react_turing_machine/precache-manifest.5b8c6c86819ecb67834820d0fb08f3f4.js"
+  "/react_turing_machine/precache-manifest.34f013f585ba3d3b3a73e10a838ef57d.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/FotoVerite/react_turing_machine/index.html", {
+workbox.routing.registerNavigationRoute("/react_turing_machine/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
