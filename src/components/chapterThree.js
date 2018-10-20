@@ -1,14 +1,10 @@
 
 import React, { PureComponent } from 'react';
-import DisplayTape from './displayTape';
-import Machine from './machine'
-import ReactJson from 'react-json-view'
-import uuidv1 from 'uuid/v1'
 
 class chapterThree extends PureComponent {
 
   componentWillMount() {
-    document.title = 'A more complex Turing Machine'
+    document.title = 'The Human Connection'
   }
 
   render() {
@@ -17,175 +13,68 @@ class chapterThree extends PureComponent {
         <h1 className={'gothic block-quote center'}>{document.title}</h1>
 
         <p>
-          So let us look at a simple turing machine. One with only one m-configuration and two operations. 
-          This computable machine prints 1 moves two to the right and calls the same m-configuration/q1. 
-          This m-configuration only has one movement so the scanned symbole can be ignored. 
-        </p>
-        <p className={"emphasized"}>
-          I really have no idea why turing didn't write m1,m2,m3...mn. Labeling them q1 vs m-configuration is just confusing to everyone. 
+          So if a Turing Machine is so simple, why do we care. Why is it a thing. You don't need to know about it to live your life. You don't even need to know 
+          what it is to be a good computer engineer. I spent 10 years writing websites before reading this paper. And I wrote emmaculate well constructed websites. 
+          So why. Why spend the time. We have so many words to describe concepts. And at the end of all of this, that's what we're trying to do. Constrain a concept. 
         </p>
 
-      <div style={{border: '2px solid black', paddingBottom: 40}}>
-        <Machine configurationsTable={{
-      start: '🍔',
-      description: "Print factoriol 1's seperated by a 0",
-      configurations: {
-        '🍔': {
-          name: "Print Guards and first 0",
-          steps: ['🖨🍔', '➡', '🖨🍔', '➡', '🖨0'],
-          callback: '⏰'
-        },
-        '⏰': {
-          name: "Print x if one is found",
-          '1': {
-            steps: ['➡', '🖨x', '⬅', '⬅', '⬅'],
-            callback: '⏰'
-          },
-          '0': {
-            steps: [],
-            callback: '⚗'
-          }
-        },
-        '⚗': {
-          name: "Print 1 if empty",
-          '🔣': {
-            steps: ['➡', '➡'],
-            callback: '⚗'
-          },
-          '🕳': {
-            steps: ['🖨1', '⬅'],
-            callback: '👾'
-          },
-      },
-      '👾': {
-          name: "remove x if found",
-          'x': {
-            steps: ['🖨🕳', '➡'],
-            callback: '⚗'
-          },
-          '🍔': {
-            steps: ['➡'],
-            callback: '🚑'
-          },
-          '🕳': {
-            steps: ['⬅', '⬅'],
-            callback: '👾'
-          }
-      },
-      '🚑': {
-        name: "print 0 if empty",
-          '🔣': {
-            steps: ['➡', '➡'],
-            callback: '🚑'
-          },
-          '🕳': {
-            steps: ['🖨0', '⬅', '⬅'],
-            callback: '⏰'
-          }
-        }
-      }
-    }}/>
-      </div>
+        <p>
+          I have watched a lot of videos about Turing Machines. 
+          <br/>
+          Some funny
+          <div className="center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/uNjxe8ShM-8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
 
-      <p>
-        So how does this actually work?
-        Turing only laid out the protype for how a computational machine should actually function. 
-        One should consider anything that I talk about on the inner working of this machine as a Turing emulation. 
-        One cannot actually build a turing machine. There is limited memory. It cannot print infinitly. It's only a simulacra. 
-      </p>
-
-      <p> With that being said. The m-configurations for this machine are very simple. </p>
+          Some Inciteful
+          <div className="center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/-ZS_zFg4w5k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
 
 
-      <ReactJson src={
-        {
-      start: '🍔',
-      description: "Print factoriol 1's seperated by a 0",
-      operations: {
-        '🍔': {
-          steps: ['🖨🍔', '➡', '🖨🍔', '➡', '🖨0', '➡', '➡',  '🖨0', '⬅', '⬅'],
-          callback: '⏰'
-        },
-        '⏰': {
-          '1': {
-            steps: ['➡', '🖨x', '⬅', '⬅', '⬅'],
-            callback: '⏰'
-          },
-          '0': {
-            steps: [],
-            callback: '⚗'
-          }
-        },
-        '⚗': {
-          '🔣': {
-            steps: ['➡', '➡'],
-            callback: '⚗'
-          },
-          '🕳': {
-            steps: ['🖨1', '⬅'],
-            callback: '👾'
-          },
-      },
-      '👾': {
-          'x': {
-            steps: ['🖨🕳', '➡'],
-            callback: '⚗'
-          },
-          '🍔': {
-            steps: ['➡'],
-            callback: '🚑'
-          },
-          '🕳': {
-            steps: ['⬅', '⬅'],
-            callback: '👾'
-          }
-      },
-      '🚑': {
-          '🔣': {
-            steps: ['➡', '➡'],
-            callback: '🚑'
-          },
-          '🕳': {
-            steps: ['🖨0', '⬅', '⬅'],
-            callback: '⏰'
-          }
-        }
-      }
-    }
-      }
-      name={false}
-      displayDataTypes={false}
-      onEdit={false}
-      />
+          <br/>
+          Some simply well done.
+          <div className="center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dNRDvLACg5Q" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
 
-      <p>
-        Both the name field and the description field are optional fields that give context to the m-configurations. 
-      </p>
-      <p>
-        Start states the name of the m-configurations the machine should first look at.
-        Now there were a number of ways this could actually work. 
-        It could be hard coded to use one called q1. It could use the first m-configuration in the json hash. I have decided to name my configuration via emoji. 
-        This is not necessary the machine will work as well with declaritive nameing like 'print-1' or {uuidv1()}&nbsp;
-        But I chose this way as the 
-        best way to allow easy configuration and writing of this machine. It can be argued that this is an incorrect implimentation because of this. 
-        A technical turing machine would only have configurations in the vein of q1..q2..q3 ectra. But I feel that the twist doesn't remove the core of
-        what a turing machine does and celebrates use of gothic lettering at the same time. 
-      </p>
+          <br/>
+         And some even just awe inspiring.
+          <div className="center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/vo8izCKHiF0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
 
-      <p>next field is configurations which houses an object. Each key of this object is considered by the emulator to be a configuration. 
-      Here the configuration is called '1⃣'
-      This configuration has an optional name field. This is necessary due to how complicated working with 
-      a turing machine can become. Have twenty states and it you need all the context you can get. </p>
+          Each gives some weight and realness to the concept of a turing machine. But they aren't what a turing machine actually is. Just as ∞ isn't actual infinity. 
+        </p>
 
-      <p>
-       The steps field houses an array which can be of any length. Each string indicates an operation for the machine to do. 
-       '➡' is for going right, '⬅' is for going left, and "🖨(symbol)" will print an arbitrary symbol.  
-      </p>
+        <p>
+          Alan Turing Published 'On Computable Numbers with an Application to the Entscheidungsproblem' in 1937. This was nine years before EDVAC report was published in
+          1945. This report was one of the first attempts to formalize how a computer was supposed to work. It was the work of near pure imagination. And imagination is hard to hold, 
+          hard to conceptualize, hard to contain. 
+        </p>
 
-      <p>
-        Finally callback is the m-configuration that will be called once all steps are complete. 
-      </p>
+        <p>
+        When you pull away from a concept it easy to assume you see all of it. You get rid of the detail and see the outline. And isn't that good enough. 
+        Earth is a blue marble in space.
+        Justice is blind.
+         Why talk about turing machine's universalness. That's not what's important for you to know. It's a simple state machine, It calculate a number and halts. Ends of story. 
+        Why actually explain what turing complete means when we can just use it as a catch all. We can know all the things and be masters of all the universes.
+        We can be our own Universal Turing Machine, calculate all that is calculatable. Know all that is knowable.  
+        </p>
 
+        <p>
+        Learning a concept is hard. It isn't usually a five minute youtube video or a pithy saying. SohCahToa Doesn't tell you the why of trig simply the how. I still don't know Trig.
+        I still don't know a lot of things. Or how of things. It easy for us to pretend. I'm pretending writing this site. There is still so much I don't understand about this paper. About Maths,
+        about what this paper actually proves. But I do know it's more then just universal state machine. 
+        </p>
+
+        <p>
+          Human beings don't stop at the end of a single problem. They do not halt. We simply continue on, we error correct. We catch try. Alan Turing was trying to 
+          show the limitations of thought. Even given infinite time under infinite logic, there are simply things we cannot know. And yet we fight against these facts, we believe it's tragic. 
+          We set up schools of thought to comprehend Math, Philosophy, Life. To rail against the dark and hope against hope that this time or system is complete. This time, there will be no edge cases. 
+          That we haven't built a Principia Mathematica. And maybe here all I am really doing is proving yet again 2+2 equals 4.
+        </p>
+        
       
       </div>
     );

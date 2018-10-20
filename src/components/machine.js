@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import Animate from 'react-move/Animate';
 import { easeExpOut } from 'd3-ease';
-import { connect } from 'react-redux';
 
+import OutputBinaryToText from './outputBinaryToText'
 import powerButton from '../images/powerStandby.svg'
 import stopImg from '../images/stop.svg'
 import rightArrow from '../images/rightArrow.svg'
@@ -23,6 +23,8 @@ import {
 
 
 const uuidv1 = require('uuid/v1');
+let movements
+
 const trackStyles = {
   top: '0em',
   position: 'absolute',
@@ -32,15 +34,31 @@ class Machine extends Component {
 
   uuid = uuidv1()
   state = {
+    bootup: false,
+    direction: 'forward',
+    speed: 'stopped',
+    steps: 0,
+    cursor: 0,
+    headPosition: 84,
+    tapePosition: 0,
+    headMoves: 10,
+    output: '',
     uuid: this.uuid,
     update: true,
-    speed: 100,
+    animationSpeed: 100,
     movements: null,
     modal: false,
     configurationsCalled: {}
   }
 
+  static defaultProps = {
+    showPlay: 'true',
+    showStepForward: 'true'
+  };
+
   componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions.bind(this));
     this.setState(
       {
         myNodeList: document.getElementById(this.uuid)
@@ -49,28 +67,37 @@ class Machine extends Component {
     )
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+  }
+
+  updateWindowDimensions() {
+    if(window.innerWidth > 760) {
+      this.setState({ headMoves: 10});
+    }
+    else {
+      this.setState({ headMoves: 4});
+    }
+  }
+
   toggleModal = () => {
     this.setState({
       modal: !this.state.modal
     });
-    this.props.stop();
-  }
-
-  stop = () => {
-    this.props.stop();
+    this.stop();
   }
 
   configurationChange = () => {
-    this.props.stop();
+    this.stop();
   }
 
   handleClick = () => {
-    if(this.props.machine.bootup === false){
-      this.props.bootUp();
-      this.setState({ update: true });
-      setTimeout(turingMachineMovements(this).startConfiguration, this.state.speed, this.props.configurationsTable.start);
+    if(this.state.bootup === false){
+      this.bootUp('normal');
+      movements = turingMachineMovements(this)
+      setTimeout(movements.startConfiguration, this.state.animationSpeed, this.props.configurationsTable.start);
     }
-    this.props.play();
+    this.restart('normal');
   }
 
   handleChange = (data) => {
@@ -79,16 +106,105 @@ class Machine extends Component {
   }
 
   handleStep = () => {
-    if(this.props.machine.bootup === false){
-      this.props.bootUp();
-      setTimeout(turingMachineMovements(this).startConfiguration, this.state.speed, this.props.configurationsTable.start);
+    if(this.state.bootup === false){
+      this.bootUp('steps');
+      movements = turingMachineMovements(this)
+      setTimeout(movements.startConfiguration, this.state.animationSpeed, this.props.configurationsTable.start);
     }
-    this.setState({ update: true });
-    this.props.startNextStep();
+    this.restart('steps');
+  }
+
+  bootUp = (speed) => {
+    this.setState({
+        bootup: true,
+        speed: speed,
+        headPosition: this.state.headPosition + 107
+    })
+  }
+
+  play = () => {
+    this.setState({
+        speed: 'normal'
+    })
+  }
+
+  restart = (speed) => {
+    if(!this.state.nextOperation) {
+      return
+    }
+    this.setState({
+        speed: speed
+    }, 
+      () => {
+        movements.restartMachine(this.state.nextOperation[0], this.state.nextOperation[1])
+      }
+    )
+   
+  }
+
+  stop = () => {
+    this.setState({
+        speed: 'stopped'
+    })
+  }
+
+  startNextStep = () => {
+    this.setState({
+      startNextStep: true,
+      speed: 'steps'
+    })
+  }
+
+  goForward = () => {
+    this.setState({
+      cursor: this.state.cursor + 1, 
+      startNextStep: false,
+    })
+    if(this.state.cursor >= this.state.headMoves){
+      this.setState({
+        tapePosition: this.state.tapePosition - 33
+      })
+    }
+    else {
+      this.setState({
+        headPosition: this.state.headPosition + 33
+      })
+    }
+  }
+
+  goBackward = () => {
+    this.setState({
+      cursor: this.state.cursor - 1, 
+      startNextStep: false,
+    })
+    if(this.state.cursor >= this.state.headMoves){
+      this.setState({
+        tapePosition: this.state.tapePosition + 33
+      })
+    }
+    else {
+      this.setState({
+        headPosition: this.state.headPosition - 33
+      })
+    }
   }
 
   render() {
     const { selectedOption } = this.state;
+    let outputType =  <div>
+              Output:
+              Binary: {this.state.output || 0} <br />
+              Integer: {parseInt(this.state.output, 2) || 0} <br />
+              </div>
+
+    switch(this.props.outputType) {
+      case 'number':
+        break;
+      case 'text':
+        outputType = <OutputBinaryToText output={this.state.output} />
+        break;
+      default:
+    }
 
     return (
       <div id={this.state.uuid} className='machine-container'>
@@ -106,8 +222,8 @@ class Machine extends Component {
             })}
 
             update={() => ({
-              headPosition: [this.props.machine.headPosition],
-              timing: { duration: this.state.speed, ease: easeExpOut },
+              headPosition: [this.state.headPosition],
+              timing: { duration: this.state.animationSpeed, ease: easeExpOut },
             })}
           >
             {(state) => {
@@ -139,8 +255,8 @@ class Machine extends Component {
             })}
 
             update={() => ({
-              tapePosition: [this.props.machine.tapePosition],
-              timing: { duration: this.state.speed, ease: easeExpOut },
+              tapePosition: [this.state.tapePosition],
+              timing: { duration: this.state.animationSpeed, ease: easeExpOut },
             })}
           >
             {(state) => {
@@ -148,7 +264,7 @@ class Machine extends Component {
 
 
               var tape = [];
-              for (let i=0; i < 10; i++) {
+              for (let i=0; i < this.state.headMoves; i++) {
                 tape.push(<div className='blank-square tape-square' key={i} />)
               }
 
@@ -172,14 +288,13 @@ class Machine extends Component {
           </Animate>
           <div style={{
               border: '1px solid black',
-              position: 'absolute', 
+              margin: 'auto',
+              width: 'calc(100% - 48px)',
               padding:20,
               top: 300, 
               right: 100
             }}>
-              Output:
-              Binary: {this.props.machine.output || 0} <br />
-              Integer: {parseInt(this.props.machine.output, 2) || 0} <br />
+            {outputType}
             <label>Step:</label>
             <input
               style={{
@@ -189,7 +304,7 @@ class Machine extends Component {
                 height: '2em',
                 clear: "both"
               }}
-              value={this.props.machine.steps.length }
+              value={this.state.steps }
             />
             <br />
             <Button color="primary" size="sm" onClick={this.toggleModal}>
@@ -202,10 +317,10 @@ class Machine extends Component {
         <div className="clearfix" ></div>
 
          <button
-            onClick={this.props.machine.speed === 'normal' ? this.stop : this.handleClick}
+            onClick={this.state.speed === 'normal' ? this.stop : this.handleClick}
             className= { this.props.showPlay ? 'powerButton' : 'powerButton hidden'}
           >
-          <img src={this.props.machine.speed === 'normal' ? stopImg : powerButton} className="" alt="power-button" />
+          <img src={this.state.speed === 'normal' ? stopImg : powerButton} className="" alt="power-button" />
           </button>
           <button
             onClick={this.handleStep}
@@ -217,7 +332,7 @@ class Machine extends Component {
 
 
         <Modal isOpen={this.state.modal} toggle={this.toggleModal} >
-          <ModalHeader toggle={this.toggle}>Movements</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Log for {this.props.configurationsTable.name} </ModalHeader>
           <ModalBody>
             <MachineLog configurationsCalled={this.state.configurationsCalled} /> 
           </ModalBody>
@@ -230,13 +345,5 @@ class Machine extends Component {
     );
   }
 }
-const stateToProps = function(state) {
-  return Object.assign({}, state);
-};
 
-const mergeProps =  (stateProps, dispatchProps, ownProps) => {
-  return Object.assign({showPlay: true, showStepForward: true}, stateProps, dispatchProps, ownProps)
-}
-
-
-export default connect(stateToProps, actions, mergeProps)(Machine);
+export default Machine;

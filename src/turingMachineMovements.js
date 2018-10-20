@@ -8,8 +8,16 @@ export default turingMachineMovements = (machine) => {
   let state = machine.state
   let configurationsCalled = 0
 
-  const setStateForThisConfiguration = () => {
-    machine.setState({
+  const promisedSetState = (newState) => {
+      return new Promise((resolve) => {
+          machine.setState(newState, () => {
+              resolve()
+          });
+      });
+  }
+
+  const setStateForThisConfiguration = (cb, emoji, configuration) => {
+   return promisedSetState({
       configurationsCalled: update(
         machine.state.configurationsCalled, {
           [configurationsCalled]: {$set: {
@@ -26,7 +34,7 @@ export default turingMachineMovements = (machine) => {
   }
 
   const setNameForThisConfiguration = (name) => {
-    machine.setState({
+    return promisedSetState({
       configurationsCalled: update(
         machine.state.configurationsCalled, {
           [configurationsCalled]: {configurationName: {$set: name}
@@ -36,7 +44,8 @@ export default turingMachineMovements = (machine) => {
   }
 
   const setStepForThisConfiguration = (step, reverse) => {
-    machine.setState({
+    return promisedSetState({
+      steps: machine.state.steps + 1,
       configurationsCalled: update(
         machine.state.configurationsCalled, {
           [configurationsCalled]: {
@@ -52,11 +61,11 @@ export default turingMachineMovements = (machine) => {
   }
 
   const setStateOfMachineForThisConfiguration = (index) => {
-    machine.setState({
+    return promisedSetState({
       configurationsCalled: update(
         machine.state.configurationsCalled, {
           [configurationsCalled]: {
-            stateOfMachine: {$set: [...document.getElementById(state.uuid).getElementsByClassName('tape-square')].map(t => t.innerHTML)  
+            stateOfMachine: {$set: [...document.getElementById(machine.state.uuid).getElementsByClassName('tape-square')].map(t => t.innerHTML)  
           },
           cursorIndex: {$set: index
 
@@ -67,7 +76,7 @@ export default turingMachineMovements = (machine) => {
   }
 
   const setCallbackOfMachineForThisConfiguration = (cb) => {
-    machine.setState({
+    return promisedSetState({
       configurationsCalled: update(
         machine.state.configurationsCalled, {
           [configurationsCalled]: {callback: {$set: cb}
@@ -78,8 +87,13 @@ export default turingMachineMovements = (machine) => {
 
   const startConfiguration = (emoji) => {
     configurationsCalled += 1
-    setStateForThisConfiguration()
     const configuration = props.configurationsTable.configurations[emoji];
+    setStateForThisConfiguration().then(() => {
+      callConfiguration(emoji, configuration)
+    })
+  }
+
+  const callConfiguration = (emoji, configuration) => {
     const configurationName = configuration.name || 'Unnamed'
     var isDoing = 'Started configuration ' + emoji + " " + configurationName
     setNameForThisConfiguration(configurationName)
@@ -91,15 +105,16 @@ export default turingMachineMovements = (machine) => {
 
     if(configurationMovement.step === undefined) {
       console.log('This configuration does nothing.')
-      return setTimeout(nextStep, state.speed, [], configurationMovement.cb)
+      return setTimeout(nextStep, machine.state.animationSpeed, [], configurationMovement.cb)
     }
     else if(configurationMovement.step.match('🖨')){
       const nextStep = [...configurationMovement.step]
-      return setTimeout(turingMachineMovements[nextStep[0]], state.speed, nextStep[1], configurationMovement.stepArray, configurationMovement.cb);
+      return setTimeout(turingMachineMovements[nextStep[0]], machine.state.animationSpeed, nextStep[1], configurationMovement.stepArray, configurationMovement.cb);
     }
     else {
-      return setTimeout(turingMachineMovements[configurationMovement.step], state.speed, configurationMovement.stepArray, configurationMovement.cb);
+      return setTimeout(turingMachineMovements[configurationMovement.step], machine.state.animationSpeed, configurationMovement.stepArray, configurationMovement.cb);
     }
+
   }
 
   const findConfigurationMovement = (configuration) => {
@@ -107,7 +122,7 @@ export default turingMachineMovements = (machine) => {
       return findStepsAndCallback(configuration);
     }
     else {
-      const symbol = state.myNodeList[props.machine.cursor].innerText;
+      const symbol = machine.state.myNodeList[machine.state.cursor].innerText;
       if(symbol !=='') {
         if(configuration[symbol]) {
           return findStepsAndCallback(configuration, symbol);
@@ -137,55 +152,73 @@ export default turingMachineMovements = (machine) => {
   }
 
   const nextStep = (stepArray, cb) => {
-    machine.setState({ update: true });
-    if(props.machine.speed === 'steps') {
-      if(props.machine.startNextStep) {
+    if(machine.state.speed === 'steps') {
+      if(machine.state.startNextStep) {
         //continue
       }
       else {
-        setTimeout(nextStep, state.speed, stepArray, cb);
+        machine.setState({nextOperation: [stepArray, cb]})
         return;
       }
     }
-    if(props.machine.speed !== 'stopped') {
+    if(machine.state.speed !== 'stopped') {
       //continue
     }
     else {
-      setTimeout(nextStep, state.speed, stepArray, cb);
+      machine.setState({nextOperation: [stepArray, cb]})
       return;
     }
     if(stepArray.length > 0) {
       const step = stepArray.shift();
       if(step.match('🖨')){
         const nextStep = [...step]
-        setTimeout(turingMachineMovements[nextStep[0]],  state.speed, nextStep[1], stepArray, cb);
+        setTimeout(turingMachineMovements[nextStep[0]],  machine.state.animationSpeed, nextStep[1], stepArray, cb);
       }
       else {
-        setTimeout(turingMachineMovements[step], state.speed, stepArray, cb);
+        setTimeout(turingMachineMovements[step], machine.state.animationSpeed, stepArray, cb);
       }
     }
     else {
-      setStateOfMachineForThisConfiguration(props.machine.cursor)
+      setStateOfMachineForThisConfiguration(machine.state.cursor)
       setCallbackOfMachineForThisConfiguration(cb)
-      setTimeout(startConfiguration, state.speed, cb);
+      setTimeout(startConfiguration, machine.state.animationSpeed, cb);
     }
+  }
+
+  const restartMachine = (stepArray, cb) => {
+    if(stepArray.length > 0) {
+      const step = stepArray.shift();
+      if(step.match('🖨')){
+        const nextStep = [...step]
+        turingMachineMovements[nextStep[0]](nextStep[1], stepArray, cb)
+      }
+      else {
+        turingMachineMovements[step](stepArray, cb)
+      }
+    }
+    else {
+      setStateOfMachineForThisConfiguration(machine.state.cursor)
+      setCallbackOfMachineForThisConfiguration(cb)
+      startConfiguration(cb)
+    }
+
   }
 
   turingMachineMovements["➡"] = (stepArray, cb) => {
     console.log("Moving Right")
     setStepForThisConfiguration("Moving Right", "⬅")
-    if(state.myNodeList[props.machine.cursor + 1] == null) {
+    if(machine.state.myNodeList[machine.state.cursor + 1] == null) {
       var div = document.createElement("div")
       div.classList.add("tape-square");
-      state.myNodeList[0].parentNode.appendChild(div)
+      machine.state.myNodeList[0].parentNode.appendChild(div)
     }
-    props.send_step('➡');
+    machine.goForward()
     nextStep(stepArray, cb)
   }
 
   turingMachineMovements["⬅"] = (stepArray, cb) => {
     setStepForThisConfiguration("Moving Left", "➡")
-    props.send_step('⬅');
+    machine.goBackward()
     nextStep(stepArray, cb)
   }
 
@@ -194,13 +227,20 @@ export default turingMachineMovements = (machine) => {
     if(symbol === '🕳') {
       symbol = " "
     }
-    props.send_step('🖨', symbol);
-    var node= state.myNodeList[props.machine.cursor];
+    var node = machine.state.myNodeList[machine.state.cursor];
     setStepForThisConfiguration("Printing symbol " + symbol, node.innerHTML)
     node.innerHTML  = symbol;
+    if(symbol === '0' || symbol === '1') {
+      machine.setState({
+        output: machine.state.output += symbol
+      })
+    }
     nextStep(stepArray, cb)
   }
 
-  return {startConfiguration: startConfiguration}
+  return {
+          startConfiguration: startConfiguration,
+          restartMachine: restartMachine
+        }
 
 }

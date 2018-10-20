@@ -49,11 +49,9 @@ p {
 
 .machine-base {
 	margin-left:20px;
-	border: 1px solid black;
 	border-top: none;
 	width: 10em;
-	height: 350px;
-	margin-bottom: 5em;
+	height: 360px;
 }
 
 
@@ -95,7 +93,9 @@ p {
 
 
 .powerButton {
+	padding:10px;
 	margin-top:50px;
+	margin-left:25px;
 	float:left;
 	width:100px;
 }

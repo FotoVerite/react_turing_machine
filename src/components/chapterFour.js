@@ -5,16 +5,16 @@ import Machine from './machine'
 import ReactJson from 'react-json-view'
 import uuidv1 from 'uuid/v1'
 
-class chapterTwo extends PureComponent {
+class chapterThree extends PureComponent {
 
   componentWillMount() {
-    document.title = 'The Very Most Simple Turing Machine'
+    document.title = 'A more complex Turing Machine'
   }
 
   render() {
     return (
       <div className="container">
-        <h1 className={'gothic block-quote center'}>The Very Most Simple Turing Machine.</h1>
+        <h1 className={'gothic block-quote center'}>{document.title}</h1>
 
         <p>
           So let us look at a simple turing machine. One with only one m-configuration and two operations. 
@@ -26,38 +26,65 @@ class chapterTwo extends PureComponent {
         </p>
 
       <div style={{border: '2px solid black', paddingBottom: 40}}>
-        <Machine showPlay={false} configurationsTable={{
-          start: '🌂',
-          name: 'Print .1_',
-          description: "Print .1111111_ forever.",
-          configurations: {
-            '🌂': {
-              name: "Print 1 and move right twice",
-              steps: ['🖨1', '➡', '➡'],
-              callback: '🌂'
-            }
+        <Machine configurationsTable={{
+      start: '🍔',
+      description: "Print factoriol 1's seperated by a 0",
+      configurations: {
+        '🍔': {
+          name: "Print Guards and first 0",
+          steps: ['🖨🍔', '➡', '🖨🍔', '➡', '🖨0'],
+          callback: '⏰'
+        },
+        '⏰': {
+          name: "Print x if one is found",
+          '1': {
+            steps: ['➡', '🖨x', '⬅', '⬅', '⬅'],
+            callback: '⏰'
+          },
+          '0': {
+            steps: [],
+            callback: '⚗'
           }
-        }}/>
-      </div>
-
-
-      <p>
-          Lets now look at it in motion.
-      </p>
-
-      <div style={{border: '2px solid black', paddingBottom: 40}}>
-        <Machine showStepForward={false} configurationsTable={{
-          start: '🌂',
-          name: 'Print .1_',
-          description: "Print .1111111_ forever.",
-          configurations: {
-            '🌂': {
-              name: "Print 1 and move right twice",
-              steps: ['🖨1', '➡', '➡'],
-              callback: '🌂'
-            }
+        },
+        '⚗': {
+          name: "Print 1 if empty",
+          '🔣': {
+            steps: ['➡', '➡'],
+            callback: '⚗'
+          },
+          '🕳': {
+            steps: ['🖨1', '⬅'],
+            callback: '👾'
+          },
+      },
+      '👾': {
+          name: "remove x if found",
+          'x': {
+            steps: ['🖨🕳', '➡'],
+            callback: '⚗'
+          },
+          '🍔': {
+            steps: ['➡'],
+            callback: '🚑'
+          },
+          '🕳': {
+            steps: ['⬅', '⬅'],
+            callback: '👾'
           }
-        }}/>
+      },
+      '🚑': {
+        name: "print 0 if empty",
+          '🔣': {
+            steps: ['➡', '➡'],
+            callback: '🚑'
+          },
+          '🕳': {
+            steps: ['🖨0', '⬅', '⬅'],
+            callback: '⏰'
+          }
+        }
+      }
+    }}/>
       </div>
 
       <p>
@@ -72,17 +99,59 @@ class chapterTwo extends PureComponent {
 
       <ReactJson src={
         {
-          start: '1⃣',
-          name: 'Print .1_',
-          description: "Print .1111111_ forever.",
-          configurations: {
-            '1⃣': {
-              name: "Print 1 and move right twice",
-              steps: ['🖨1', '➡', '➡'],
-              callback: '1⃣'
-            }
+      start: '🍔',
+      description: "Print factoriol 1's seperated by a 0",
+      operations: {
+        '🍔': {
+          steps: ['🖨🍔', '➡', '🖨🍔', '➡', '🖨0', '➡', '➡',  '🖨0', '⬅', '⬅'],
+          callback: '⏰'
+        },
+        '⏰': {
+          '1': {
+            steps: ['➡', '🖨x', '⬅', '⬅', '⬅'],
+            callback: '⏰'
+          },
+          '0': {
+            steps: [],
+            callback: '⚗'
+          }
+        },
+        '⚗': {
+          '🔣': {
+            steps: ['➡', '➡'],
+            callback: '⚗'
+          },
+          '🕳': {
+            steps: ['🖨1', '⬅'],
+            callback: '👾'
+          },
+      },
+      '👾': {
+          'x': {
+            steps: ['🖨🕳', '➡'],
+            callback: '⚗'
+          },
+          '🍔': {
+            steps: ['➡'],
+            callback: '🚑'
+          },
+          '🕳': {
+            steps: ['⬅', '⬅'],
+            callback: '👾'
+          }
+      },
+      '🚑': {
+          '🔣': {
+            steps: ['➡', '➡'],
+            callback: '🚑'
+          },
+          '🕳': {
+            steps: ['🖨0', '⬅', '⬅'],
+            callback: '⏰'
           }
         }
+      }
+    }
       }
       name={false}
       displayDataTypes={false}
@@ -117,9 +186,7 @@ class chapterTwo extends PureComponent {
         Finally callback is the m-configuration that will be called once all steps are complete. 
       </p>
 
-       <p>
-        <a href={`${process.env.PUBLIC_URL}/chapter-3/`}>The Human Connection</a>
-        </p>
+      
       </div>
     );
   }
@@ -127,5 +194,5 @@ class chapterTwo extends PureComponent {
 
 
 
-export default chapterTwo
+export default chapterThree
 

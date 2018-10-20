@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-
+import Machine from './machine'
+import configuration from '../mConfigurations/alanTuring'
 const trackStyles = {
   position: 'absolute',
   bottom: 0,
@@ -30,11 +31,15 @@ class Intro extends PureComponent {
           <br /> by Charles Petzold. 
         </p>
         <p className={"emphasized"}>Well as easy as possible given the complexitity and general leaps in logic given to the source material.</p>
+
+        <div style={{border: '2px solid black', paddingBottom: 40}}>
+        <Machine  configurationsTable={configuration} outputType={'text'}/>
+      </div>
         
-        <ul className="list-group">
-          <li className="list-group-item"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>Why this site?</a></li>
-          <li className="list-group-item"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>A simple Turing Machine</a></li>
-          <li className="list-group-item"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>A Complex Turing Machine</a></li>
+        <ul className="list-group mt-4 mb-4">
+          <li className="list-group-item  border-secondary"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>Why this site?</a></li>
+          <li className="list-group-item  border-secondary"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>A simple Turing Machine</a></li>
+          <li className="list-group-item  border-secondary"><a href={`${process.env.PUBLIC_URL}/chapter-1/`}>A complex Turing Machine</a></li>
         </ul>
       </div>
     );
