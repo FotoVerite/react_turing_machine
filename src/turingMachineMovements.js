@@ -16,7 +16,7 @@ export default turingMachineMovements = (machine) => {
       });
   }
 
-  const setStateForThisConfiguration = (cb, emoji, configuration) => {
+  const setStateForThisConfiguration = (cb) => {
    return promisedSetState({
       configurationsCalled: update(
         machine.state.configurationsCalled, {
@@ -87,7 +87,17 @@ export default turingMachineMovements = (machine) => {
 
   const startConfiguration = (emoji) => {
     configurationsCalled += 1
-    const configuration = props.configurationsTable.configurations[emoji];
+    let configuration 
+    try {
+      configuration = machine.state.configurationsTable.configurations[emoji];
+      if(configuration === undefined) {
+        throw(`configuration ${emoji} not found`)
+      }
+    }
+    catch(err) {
+      machine.setState({error: err })
+      return
+    }
     setStateForThisConfiguration().then(() => {
       callConfiguration(emoji, configuration)
     })
@@ -157,7 +167,7 @@ export default turingMachineMovements = (machine) => {
         //continue
       }
       else {
-        machine.setState({nextOperation: [stepArray, cb]})
+        machine.setState({nextOperation: [stepArray, cb, configurationsCalled]})
         return;
       }
     }
@@ -165,7 +175,7 @@ export default turingMachineMovements = (machine) => {
       //continue
     }
     else {
-      machine.setState({nextOperation: [stepArray, cb]})
+      machine.setState({nextOperation: [stepArray, cb, configurationsCalled]})
       return;
     }
     if(stepArray.length > 0) {
@@ -185,7 +195,9 @@ export default turingMachineMovements = (machine) => {
     }
   }
 
-  const restartMachine = (stepArray, cb) => {
+  const restartMachine = (newMachine, stepArray, cb) => {
+    machine = newMachine
+    configurationsCalled = machine.state.nextOperation[2]
     if(stepArray.length > 0) {
       const step = stepArray.shift();
       if(step.match('🖨')){

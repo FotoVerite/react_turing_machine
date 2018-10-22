@@ -1,81 +1,203 @@
 
 import React, { PureComponent } from 'react';
+import DisplayTape from './displayTape';
+import Machine from './machine'
+import ReactJson from 'react-json-view'
+import uuidv1 from 'uuid/v1'
+import Popover from './Popover';
 
 class chapterThree extends PureComponent {
 
   componentWillMount() {
-    document.title = 'The Human Connection'
+    document.title = 'Turing First Machine'
   }
 
   render() {
     return (
       <div className="container">
-        <h1 className={'gothic block-quote center'}>{document.title}</h1>
+        <h1 className={'gothic block-quote center'}>Turing's First Machine</h1>
 
-        <p>
-          So if a Turing Machine is so simple, why do we care. Why is it a thing. You don't need to know about it to live your life. You don't even need to know 
-          what it is to be a good computer engineer. I spent 10 years writing websites before reading this paper. And I wrote emmaculate well constructed websites. 
-          So why. Why spend the time. We have so many words to describe concepts. And at the end of all of this, that's what we're trying to do. Constrain a concept. 
-        </p>
+        <div className={'block-quote'}>
+         <div className='paragraph'> A machine can be constructed to compute the sequence 010101....
+         The machine is to have the four m-configurations 
+         <span className='gothic'>"b"</span> , 
+         <span className='gothic'>"c"</span> , 
+         <span className='gothic'>"k"</span> , 
+         <span className='gothic'>"e"</span>
+        <Popover id={1} message={
+          "Just.... why Turing did you want to make these symbols so hard to decipher. " +
+          "Truth, I would never know that third m-configuration is a k. It makes no sense. Why k and not d." +
+          "k don't even look like k's they look like a weird f."
+        }/>
+  
+         and is capable of printing " 0 " and " 1 ". The behaviour of the machine is
+         described in the following table in which " R " means "the machine moves
+         so that it scans the square immediately on the right of the one it was
+         scanning previously". Similarly for "L". "E" means "the scanned
+         symbol is erased" and "P " stands for "prints". This table (and all
+         succeeding tables of the same kind) is to be understood to mean that for
+         a configuration described in the first two columns the operations in the
+         third column are carried out successively, and the machine then goes over
+         into the m-configuration described in the last column. When the second
+         column is left blank, it is understood that the behaviour of the third and
+         fourth columns applies for any symbol and for no symbol. The machine
+         starts in the m-configuration <span className='gothic'>"b"</span> with a blank tape.</div>
+         <hr />
+          <small> Section 3: Paragraph 1 </small>
+        </div>
 
-        <p>
-          I have watched a lot of videos about Turing Machines. 
-          <br/>
-          Some funny
-          <div className="center">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/uNjxe8ShM-8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-
-          Some Inciteful
-          <div className="center">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/-ZS_zFg4w5k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
+      <p>Most of what Turing says we have already gone over. 
+      You will notice that he simply states that it starts with b m-configuration 
+      without any real configuration in the table itself. It's simply convention.</p>
 
 
-          <br/>
-          Some simply well done.
-          <div className="center">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/dNRDvLACg5Q" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
+      <table class="list table table-striped">
+        <thead>
+          <tr>
+            <th>m-config.</th>
+            <th>symbols</th>
+            <th>operations</th>
+            <th>final m-configuration
+             <Popover id={2} message={
+                "Final m-configuration is complete misnomer since there is nothing final about it. " +
+                "It's just the next configuration called. It's a callback."
+              }/>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>b</td>
+            <td>NONE</td>
+            <td>🖨0, ➡</td>
+            <td>c</td>
+          </tr>
+          <tr>
+            <td>c</td>
+            <td>NONE</td>
+            <td>➡</td>
+            <td>e</td>
+          </tr>
+          <tr>
+            <td>e</td>
+            <td>NONE</td>
+            <td>🖨1, ➡</td>
+            <td>k</td>
+          </tr>
+          <tr>
+            <td>k</td>
+            <td>NONE</td>
+            <td>➡</td>
+            <td>b</td>
+          </tr>
+        </tbody>
+      </table>
 
-          <br/>
-         And some even just awe inspiring.
-          <div className="center">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/vo8izCKHiF0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
+      <p>
+        Pretty simple when you break it down. You can see how each m configuration leads to the next configuration and then circling back to the start with 
+        m-configuration b.
+      </p>
 
-          Each gives some weight and realness to the concept of a turing machine. But they aren't what a turing machine actually is. Just as ∞ isn't actual infinity. 
-        </p>
+      <p> We can translate this to a configuration that works with my Turing Emulator as show below.</p>
 
-        <p>
-          Alan Turing Published 'On Computable Numbers with an Application to the Entscheidungsproblem' in 1937. This was nine years before EDVAC report was published in
-          1945. This report was one of the first attempts to formalize how a computer was supposed to work. It was the work of near pure imagination. And imagination is hard to hold, 
-          hard to conceptualize, hard to contain. 
-        </p>
+      <ReactJson src={
+        {
+          start: 'b',
+          name: 'Print .101_',
+          description: "Print .101_ repeating.",
+          configurations: {
+            'b': {
+              name: "Print 0 and go right",
+              steps: ['🖨0', '➡'],
+              callback: 'c'
+            },
+            'c': {
+              name: "Go Right",
+              steps: ['➡'],
+              callback: 'k'
+            },
+            'k': {
+              name: "Print 1 and go right",
+              steps: ['🖨1', '➡'],
+              callback: 'e'
+            },
+            'e': {
+              name: "Go Right",
+              steps: ['➡'],
+              callback: 'b'
+            }
+          }
+        }
+      }
+      name={false}
+      displayDataTypes={false}
+      onEdit={false}
+      />
 
-        <p>
-        When you pull away from a concept it easy to assume you see all of it. You get rid of the detail and see the outline. And isn't that good enough. 
-        Earth is a blue marble in space.
-        Justice is blind.
-         Why talk about turing machine's universalness. That's not what's important for you to know. It's a simple state machine, It calculate a number and halts. Ends of story. 
-        Why actually explain what turing complete means when we can just use it as a catch all. We can know all the things and be masters of all the universes.
-        We can be our own Universal Turing Machine, calculate all that is calculatable. Know all that is knowable.  
-        </p>
+      <br />
 
-        <p>
-        Learning a concept is hard. It isn't usually a five minute youtube video or a pithy saying. SohCahToa Doesn't tell you the why of trig simply the how. I still don't know Trig.
-        I still don't know a lot of things. Or how of things. It easy for us to pretend. I'm pretending writing this site. There is still so much I don't understand about this paper. About Maths,
-        about what this paper actually proves. But I do know it's more then just universal state machine. 
-        </p>
+      <div style={{border: '2px solid black', paddingBottom: 40}}>
+        <Machine showPlay={true} showStepForward={false} configurationsTable={{
+          start: 'b',
+          name: 'Print .101_',
+          description: "Print .101_ repeating.",
+          configurations: {
+            'b': {
+              name: "Print 0 and go right",
+              steps: ['🖨0', '➡'],
+              callback: 'c'
+            },
+            'c': {
+              name: "Go Right",
+              steps: ['➡'],
+              callback: 'k'
+            },
+            'k': {
+              name: "Print 1 and go right",
+              steps: ['🖨1', '➡'],
+              callback: 'e'
+            },
+            'e': {
+              name: "Go Right",
+              steps: ['➡'],
+              callback: 'b'
+            }
+          }
+        }
+      }/>
+      </div>
+      <br />
+      <div className='paragraph'>
+        Of course we can make this even simpler. One m-configuration in fact. 
+        So, what's the point of interactivity if you can't interact with it.
+        Here's a Turing Machine with the skeleton m-configuration. Play around and see if you can have it output using only one configuration.      
+      </div>
 
-        <p>
-          Human beings don't stop at the end of a single problem. They do not halt. We simply continue on, we error correct. We catch try. Alan Turing was trying to 
-          show the limitations of thought. Even given infinite time under infinite logic, there are simply things we cannot know. And yet we fight against these facts, we believe it's tragic. 
-          We set up schools of thought to comprehend Math, Philosophy, Life. To rail against the dark and hope against hope that this time or system is complete. This time, there will be no edge cases. 
-          That we haven't built a Principia Mathematica. And maybe here all I am really doing is proving yet again 2+2 equals 4.
-        </p>
-        
-      
+       <div style={{border: '2px solid black', paddingBottom: 40}}>
+        <Machine showPlay={true} showStepForward={false} showConfigurations={true} configurationsTable={{
+          start: 'b',
+          name: 'Print .101_',
+          description: "Print .101_ repeating.",
+          configurations: {
+            'b': {
+              '🕳': {
+                steps: [],
+                callback: 'b'
+              },
+              '0': {
+                steps: [],
+                callback: 'b'
+
+              },
+              '1': {
+                steps: [],
+                callback: 'b'
+              }
+             }
+          }
+        }
+      }/>
+      </div>
       </div>
     );
   }

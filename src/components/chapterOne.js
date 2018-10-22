@@ -1,6 +1,8 @@
 
 import React, { PureComponent } from 'react';
 import DisplayTape from './displayTape';
+import Popover from './Popover';
+
 import Machine from './machine'
 
 class chapterOne extends PureComponent {
@@ -14,11 +16,18 @@ class chapterOne extends PureComponent {
       <div className="container">
         <h1 className={'gothic block-quote center'}>Why this Site.</h1>
 
-        <p>During my research on another talk about Turing. This being on his "Computing Machinery and Intelligence" paper
-          I noticed an interesting trend of people misrepresenting what a turing machine in.
-          </p>
-        <p className={"emphasized"}>Turing really liked long title names</p>
-        <p>This is mostly in simplifying the concept, but also sometimes down right mangling them to the point of nonsense. Looking at you google doodle.</p>
+        <div className='paragraph'>During my research on another talk about Turing. This being on his
+          &nbsp; 
+          <a href='https://www.csee.umbc.edu/courses/471/papers/turing.pdf' target="_blank">
+          "Computing Machinery and Intelligence"        
+          </a>
+          <Popover id={1} message={'Turing really liked long title names'}/>
+          paper I noticed an interesting trend of people misrepresenting what a turing machine in.
+        </div>
+        <p>This is mostly in simplifying the concept, but also sometimes down right mangling them to the point of nonsense. Looking at you 
+         &nbsp;<a href='https://www.google.com/doodles/alan-turings-100th-birthday' target="_blank">google doodle</a>.
+         <Popover id={2} message={"I mean seriously it's not even a turing machine it's a puzzle in the general shape of a turing machine. A bad puzzle!"}/>
+        </p>
         <p> These simplifications though, while well meaning I do believe cause so major cogniatives issues when you are grappling with the paper and the issues
         Turing illustrated vai this machine. Of course one can add on to the concept of what Turing machine is or can do. We improve and rethink things constantly.
         But to represent these as 'Turing Machines and not instead 'Turing Equivilant Machine'
@@ -44,7 +53,7 @@ class chapterOne extends PureComponent {
         <div className={'block-quote'}>
           <p>
           We may compare a man in the process of computing a real number to a
-          machine which is only capable of a finite number of conditions
+          machine which is only capable of a finite number of conditions &nbsp;
           <span className={'gothic'}>q</span>1:
           <span className={'gothic'}>q</span>2. ....
           <span className={'gothic'}>q</span>N;
@@ -61,9 +70,9 @@ class chapterOne extends PureComponent {
           the machine can effectively remember some of the symbols which
           it has "seen" (scanned) previously. The possible behaviour of the
           machine at any moment is determined by the
-          <span className={'gothic'}> m-configuration</span>
+          <span className={'gothic'}> m-configuration</span>&nbsp;
           <span className={'gothic'}>qn</span> and the
-          scanned symbol
+          scanned symbol &nbsp;
            <span className={'gothic'}>S</span>(<span className={'gothic'}>r</span>).
           This pair <span className={'gothic'}>qn, S(r)</span> will be called the 'configuration':
           thus the configuration determines the possible behaviour of the machine.
@@ -80,16 +89,20 @@ class chapterOne extends PureComponent {
           <hr />
           <small> Section 1: Paragraph 2 </small>
         </div>
-        <p>
+        <div className='paragraph'>
         The first thing to note is that Turing wrote increadibly densly.
         The entire paper is not entirely easily understood mostly from his poor word choices
         so take your time in reading excerpts and don't feel like it is your fault for not following.
-        </p>
-        <p>
+        <Popover id={3} message={"I've read the second half 50 times and I still struggle with most of it."}/>
+
+        </div>
+        <div className='paragraph'>
         The Second is that Alan Turing loved him some German font. They are increadibly hard to read and make following the paper even more tedious.
         I will try to represent them accurately in exerpts but I will also rename them for easier discussion.
         Mostly to upper or lower case normal font family of the site but also at times in EMOJI. It will make sense in context.
-        </p>
+        <Popover id={4} message={"I mean who doesn't love themselves a well chosen emoji 🙌"}/>
+
+        </div>
         <p>
         So lets take this very slowly.
         </p>
@@ -227,15 +240,15 @@ class chapterOne extends PureComponent {
           <small> Section 1: Paragraph 2 line 8 </small>
         </div>
 
-        <p> Notice that Turing says, 'decimal of the real number'. Turing in this paper is calculating fractional decimal numbers.
+        <div className='paragraph'> Notice that Turing says, 'decimal of the real number'. Turing in this paper is calculating fractional decimal numbers.
         #TODO why? For most purposes it's easy enough to consider whole numbers written in binary
         we can consider this to be equivilant to a whole real number.
         But it is good to keep in mind that these machines in the paper are calculating fractions between 0 and 1. Also note that 0 and 1's cannot be erased.
         Only the other symbols that are used to keep track of state.
-        </p>
-        <p>
-        And we are not even close to done yet. :D. I would suggest taking a break and stretching your legs then coming back.
-        </p>
+        <Popover id={5} message={"And we are not even close to done yet. 😄. I would suggest taking a break and stretching your legs then coming back."}/>
+
+        </div>
+    
 
         <p>Turing now defines two seperate types of Machines in his paper. </p>
 
@@ -244,9 +257,8 @@ class chapterOne extends PureComponent {
             Automatic machines.
             If at each stage the motion of a machine (in the sense of § 1) is completely
             determined by the configuration, we shall call the machine an "automatic
-            machine" (or a-machine).
-            .For some purposes we might use machines (choice machines or
-            c-manhines) whose motion is onty partially determined by the configuration
+            machine" (or a-machine) for some purposes we might use machines (choice machines or
+            c-machines) whose motion is only partially determined by the configuration
             (hence the use of the word "possible" in §1). When such a machine
             reaches one of these ambiguous configurations, it cannot go on until some
             arbitrary choice has been made by an external operator. This would be the
@@ -308,7 +320,7 @@ of the second kind, but cannot print any more symbols of the first kind.
         <p>
             Circular machines here are in some fundamental way broken. Their m-configurations are made in some way that a q<subscript>n</subscript>'s callback plus scanned symbol doesn't have an entry or their m-configuration leads to a loop where no more 0 or 1's or ever printed onto the tape. Notice that there he is very clear that there is no possible move. Not that there is a halt state. Turing does not consider that there can be configuration that ends the machine. The machine is supposed to go on forever. In fact the word is not even mentioned in the paper. I emphasize this point because so many examples of turing machines include the ability for the machine to halt. But that is later addition added onto the concept seperate from this paper and the how Turing thought about the concept of computational machines. This is why he is using circular to describe these machines. They are stuck in a broken loop and not continuing on a valid path. The naming convention still sucks though.
         </p>
-        <p>
+        <div className="paragraph">
           So lets reiterate what we have so for. Turing has described the concept of a computational machine. 
           It's input and output exists on a piece of tape. 
           The machine configuration movements are automatic and should print out figures for an infinite amount of time.
@@ -316,10 +328,9 @@ of the second kind, but cannot print any more symbols of the first kind.
           It does this by a finite configurations of movements which he labels m-configurations.
           Finally the machine has no understanding sense of state but can scan a symbol that is in the machine itself.
           Only a human looking at the machine can fully gage what it has done.
-        </p>
-
-        <p className={"emphasized"}>All this monotnous detail I think is why so many people simplify what a Turing machine is.
-        The paper is torture but groking the intricacies helps with understanding why it is important</p>
+          <Popover id={6}
+           message={"All this monotonous detail I think is why so many people simplify what a Turing machine is. The paper is torture but groking the intricacies helps with understanding why it is important."}/>
+        </div>
 
         <p>
          But how does this actually all fit together. While Turing is very throughough is explaining the details of the machine. 

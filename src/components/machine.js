@@ -5,13 +5,13 @@ import Animate from 'react-move/Animate';
 import { easeExpOut } from 'd3-ease';
 
 import OutputBinaryToText from './outputBinaryToText'
+import ErrorsDisplay from './machine/ErrorsDisplay'
 import powerButton from '../images/powerStandby.svg'
 import stopImg from '../images/stop.svg'
 import rightArrow from '../images/rightArrow.svg'
 import * as actions from '../actions/actions';
 import MachineLog from './machineLog'
 import turingMachineMovements from '../turingMachineMovements'
-import Typing from 'react-typing-animation';
 
 import {
   Modal,
@@ -48,6 +48,7 @@ class Machine extends Component {
     animationSpeed: 100,
     movements: null,
     modal: false,
+    configurationsTable: this.props.configurationsTable,
     configurationsCalled: {}
   }
 
@@ -94,8 +95,8 @@ class Machine extends Component {
   handleClick = () => {
     if(this.state.bootup === false){
       this.bootUp('normal');
-      movements = turingMachineMovements(this)
-      setTimeout(movements.startConfiguration, this.state.animationSpeed, this.props.configurationsTable.start);
+      movements = new turingMachineMovements(this)
+      setTimeout(movements.startConfiguration, this.state.animationSpeed, this.state.configurationsTable.start);
     }
     this.restart('normal');
   }
@@ -108,10 +109,26 @@ class Machine extends Component {
   handleStep = () => {
     if(this.state.bootup === false){
       this.bootUp('steps');
-      movements = turingMachineMovements(this)
-      setTimeout(movements.startConfiguration, this.state.animationSpeed, this.props.configurationsTable.start);
+      movements = new turingMachineMovements(this)
+      setTimeout(movements.startConfiguration, this.state.animationSpeed, this.state.configurationsTable.start);
     }
     this.restart('steps');
+  }
+
+  handleTextAreaKeydown = (event) => {
+    let json
+    try {
+      json = JSON.parse(event.target.value)
+      if(json === undefined) {
+        throw 'do not update'
+      }
+    } 
+    catch {
+      return;
+    }
+    this.setState({
+      configurationsTable: json
+    })
   }
 
   bootUp = (speed) => {
@@ -136,10 +153,20 @@ class Machine extends Component {
         speed: speed
     }, 
       () => {
-        movements.restartMachine(this.state.nextOperation[0], this.state.nextOperation[1])
+        movements.restartMachine(this, this.state.nextOperation[0], this.state.nextOperation[1])
       }
     )
    
+  }
+
+  reset = () => {
+    this.setState({
+      error: false,
+      bootup: false,
+      speed: 'stopped',
+      headPosition: 84,
+      tapePosition: 0,
+    })
   }
 
   stop = () => {
@@ -205,10 +232,23 @@ class Machine extends Component {
         break;
       default:
     }
+    const machineStyle = this.state.showConfigurations ? {} : {width: '75%'}
 
     return (
-      <div id={this.state.uuid} className='machine-container'>
-
+      <div style={{position: 'relative'}}>
+      {this.state.error &&
+        <ErrorsDisplay error={this.state.error} reset={this.reset}/>
+      }
+      {this.props.showConfigurations &&
+        <textarea 
+          style={{width: '25%', height:'680px', float:'left'}}
+          onChange={this.handleTextAreaKeydown}
+        >
+          {JSON.stringify(this.state.configurationsTable, undefined, 4)}
+        </textarea>
+      }
+      <div id={this.state.uuid} className='machine-container' style={machineStyle}>
+        
         <div className="machine-base">
 
         </div>
@@ -316,31 +356,33 @@ class Machine extends Component {
 
         <div className="clearfix" ></div>
 
-         <button
+         <a
             onClick={this.state.speed === 'normal' ? this.stop : this.handleClick}
             className= { this.props.showPlay ? 'powerButton' : 'powerButton hidden'}
           >
           <img src={this.state.speed === 'normal' ? stopImg : powerButton} className="" alt="power-button" />
-          </button>
-          <button
+          </a>
+          <a
             onClick={this.handleStep}
             className={ this.props.showStepForward ? 'powerButton' : 'powerButton hidden'}
           >
           <img src={rightArrow} className="" alt="power-button" />
-          </button>
+          </a>
 
 
 
         <Modal isOpen={this.state.modal} toggle={this.toggleModal} >
-          <ModalHeader toggle={this.toggle}>Log for {this.props.configurationsTable.name} </ModalHeader>
+          <ModalHeader toggle={this.toggleModal}>Log for {this.state.configurationsTable.name} </ModalHeader>
           <ModalBody>
             <MachineLog configurationsCalled={this.state.configurationsCalled} /> 
           </ModalBody>
           <ModalFooter>
+            <Button color="secondary" onClick={this.toggleModal}>Close</Button>
           </ModalFooter>
         </Modal>
 
       
+      </div>
       </div>
     );
   }

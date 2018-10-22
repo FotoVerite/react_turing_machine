@@ -15,6 +15,31 @@ p {
 	font-size: 24px;
 }
 
+hr {
+  border: 1px solid gray !important;
+}
+
+table {
+  text-align: center;
+}
+
+tr:nth-child(odd) {
+    background-color: #D4D3DA
+}
+td {
+  border: 1px solid #7D7E7E;
+}
+
+th {
+  background: #6B0803;
+  color: white;
+}
+
+.paragraph {
+	font-size: 24px;
+	margin-bottom: 24px;
+}
+
 .clearfix {
 	display: block;
 	clear: both;
@@ -93,6 +118,8 @@ p {
 
 
 .powerButton {
+	cursor: pointer;
+	border: 1px solid black;
 	padding:10px;
 	margin-top:50px;
 	margin-left:25px;
@@ -101,6 +128,8 @@ p {
 }
 
 .powerButton img {
+	display: block;
+	margin:auto;
 	width:50px;
 }
 
@@ -121,6 +150,54 @@ footer {
 	background: red;
 }
 
+.footnote {
+	position: relative;
+  z-index: 5;
+  top: -.1em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: inline-block;
+  padding: .35em;
+  padding-right:3px;
+  margin-right:10px;
+  margin-left:0px;
+  border: none;
+  border-radius: .3em;
+  cursor: pointer;
+  background-color: #C8CDD5;
+  backface-visibility: hidden;
+  font-size: 1rem;
+  line-height: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  transition-property: background-color;
+  transition-duration: .25s;
+}
+
+.footnote:hover {
+	background:#790009;
+}
+
+.circle {
+  display: inline-block;
+  width: .25em;
+  height: .25em;
+  margin-right: .25em;
+  float: left;
+  color:red;
+}
+.tooltip-theme {
+	max-width:500px;
+	border-radius: 10px !important;
+	font-size: 20px !important;
+}
+
+.tooltip-theme ul {
+	padding:10px 20px 0;
+	list-style: none;
+	margin:0px;
+}
 
 div.log h2 {
 	font-size:18px;
