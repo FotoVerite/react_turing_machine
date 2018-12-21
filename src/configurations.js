@@ -223,7 +223,7 @@ export default {
           }
         },
         '😠': {
-          name: 'foud-1st-digit',
+          name: 'found-1st-digit',
           '0': {
             steps: ['➡'],
             callback: '📶'

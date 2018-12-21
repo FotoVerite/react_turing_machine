@@ -19,17 +19,17 @@ class chapterThree extends PureComponent {
 
         <div className={'block-quote'}>
          <div className='paragraph'> A machine can be constructed to compute the sequence 010101....
-         The machine is to have the four m-configurations 
-         <span className='gothic'>"b"</span> , 
-         <span className='gothic'>"c"</span> , 
-         <span className='gothic'>"k"</span> , 
+         The machine is to have the four m-configurations
+         <span className='gothic'>"b"</span> ,
+         <span className='gothic'>"c"</span> ,
+         <span className='gothic'>"k"</span> ,
          <span className='gothic'>"e"</span>
         <Popover id={1} message={
           "Just.... why Turing did you want to make these symbols so hard to decipher. " +
           "Truth, I would never know that third m-configuration is a k. It makes no sense. Why k and not d." +
           "k don't even look like k's they look like a weird f."
         }/>
-  
+
          and is capable of printing " 0 " and " 1 ". The behaviour of the machine is
          described in the following table in which " R " means "the machine moves
          so that it scans the square immediately on the right of the one it was
@@ -46,8 +46,8 @@ class chapterThree extends PureComponent {
           <small> Section 3: Paragraph 1 </small>
         </div>
 
-      <p>Most of what Turing says we have already gone over. 
-      You will notice that he simply states that it starts with b m-configuration 
+      <p>Most of what Turing says we have already gone over.
+      You will notice that he simply states that it starts with b m-configuration
       without any real configuration in the table itself. It's simply convention.</p>
 
 
@@ -94,7 +94,7 @@ class chapterThree extends PureComponent {
       </table>
 
       <p>
-        Pretty simple when you break it down. You can see how each m configuration leads to the next configuration and then circling back to the start with 
+        Pretty simple when you break it down. You can see how each m configuration leads to the next configuration and then circling back to the start with
         m-configuration b.
       </p>
 
@@ -168,12 +168,12 @@ class chapterThree extends PureComponent {
       </div>
       <br />
       <div className='paragraph'>
-        Of course we can make this even simpler. One m-configuration in fact. 
+        Of course we can make this even simpler. One m-configuration in fact.
         So, what's the point of interactivity if you can't interact with it.
-        Here's a Turing Machine with the skeleton m-configuration. Play around and see if you can have it output using only one configuration.      
+        Here's a Turing Machine with the skeleton m-configuration. Play around and see if you can have it output using only one configuration.
       </div>
 
-       <div style={{border: '2px solid black', paddingBottom: 40}}>
+       <div style={{border: '2px solid black', paddingBottom: 40, marginBottom:60}}>
         <Machine showPlay={true} showStepForward={false} showConfigurations={true} configurationsTable={{
           start: 'b',
           name: 'Print .101_',

@@ -122,7 +122,7 @@ class Machine extends Component {
       if(json === undefined) {
         throw 'do not update'
       }
-    } 
+    }
     catch {
       return;
     }
@@ -151,12 +151,12 @@ class Machine extends Component {
     }
     this.setState({
         speed: speed
-    }, 
+    },
       () => {
         movements.restartMachine(this, this.state.nextOperation[0], this.state.nextOperation[1])
       }
     )
-   
+
   }
 
   reset = () => {
@@ -184,7 +184,7 @@ class Machine extends Component {
 
   goForward = () => {
     this.setState({
-      cursor: this.state.cursor + 1, 
+      cursor: this.state.cursor + 1,
       startNextStep: false,
     })
     if(this.state.cursor >= this.state.headMoves){
@@ -201,7 +201,7 @@ class Machine extends Component {
 
   goBackward = () => {
     this.setState({
-      cursor: this.state.cursor - 1, 
+      cursor: this.state.cursor - 1,
       startNextStep: false,
     })
     if(this.state.cursor >= this.state.headMoves){
@@ -232,7 +232,7 @@ class Machine extends Component {
         break;
       default:
     }
-    const machineStyle = this.state.showConfigurations ? {} : {width: '75%'}
+    const machineStyle = !this.props.showConfigurations ? {} : {width: '75%'}
 
     return (
       <div style={{position: 'relative'}}>
@@ -240,7 +240,7 @@ class Machine extends Component {
         <ErrorsDisplay error={this.state.error} reset={this.reset}/>
       }
       {this.props.showConfigurations &&
-        <textarea 
+        <textarea
           style={{width: '25%', height:'680px', float:'left'}}
           onChange={this.handleTextAreaKeydown}
         >
@@ -248,7 +248,7 @@ class Machine extends Component {
         </textarea>
       }
       <div id={this.state.uuid} className='machine-container' style={machineStyle}>
-        
+
         <div className="machine-base">
 
         </div>
@@ -313,6 +313,7 @@ class Machine extends Component {
 
                 <div className="tape"
                   style={{
+                    overflow: 'hidden',
                     width: `calc(100% - ${tapePosition}px)`,
                     WebkitTransform: `translate3d(${tapePosition}px, 0, 0)`,
                     transform: `translate3d(${tapePosition}px, 0, 0)`
@@ -331,7 +332,7 @@ class Machine extends Component {
               margin: 'auto',
               width: 'calc(100% - 48px)',
               padding:20,
-              top: 300, 
+              top: 300,
               right: 100
             }}>
             {outputType}
@@ -374,14 +375,14 @@ class Machine extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggleModal} >
           <ModalHeader toggle={this.toggleModal}>Log for {this.state.configurationsTable.name} </ModalHeader>
           <ModalBody>
-            <MachineLog configurationsCalled={this.state.configurationsCalled} /> 
+            <MachineLog configurationsCalled={this.state.configurationsCalled} />
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggleModal}>Close</Button>
           </ModalFooter>
         </Modal>
 
-      
+
       </div>
       </div>
     );

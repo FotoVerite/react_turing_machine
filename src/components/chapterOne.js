@@ -16,16 +16,13 @@ class chapterOne extends PureComponent {
       <div className="container">
         <h1 className={'gothic block-quote center'}>Why this Site.</h1>
 
-        <div className='paragraph'>During my research on another talk about Turing. This being on his
-          &nbsp; 
-          <a href='https://www.csee.umbc.edu/courses/471/papers/turing.pdf' target="_blank">
-          "Computing Machinery and Intelligence"        
+        <div className='paragraph'>While researching a talk on Turing's paper <a href='https://www.csee.umbc.edu/courses/471/papers/turing.pdf' target="_blank">
+          "Computing Machinery and Intelligence"
           </a>
           <Popover id={1} message={'Turing really liked long title names'}/>
-          paper I noticed an interesting trend of people misrepresenting what a turing machine in.
+          , I noticed an interesting trend of people misrepresenting what a turing machine is.
         </div>
-        <p>This is mostly in simplifying the concept, but also sometimes down right mangling them to the point of nonsense. Looking at you 
-         &nbsp;<a href='https://www.google.com/doodles/alan-turings-100th-birthday' target="_blank">google doodle</a>.
+        <p>The misrepresentation is mostly around simplifying the concept, but also someitmes down right mangling it to the point of nonsense. Looking at you <a href='https://www.google.com/doodles/alan-turings-100th-birthday' target="_blank"> google doodle</a>.
          <Popover id={2} message={"I mean seriously it's not even a turing machine it's a puzzle in the general shape of a turing machine. A bad puzzle!"}/>
         </p>
         <p> These simplifications though, while well meaning I do believe cause so major cogniatives issues when you are grappling with the paper and the issues
@@ -248,7 +245,7 @@ class chapterOne extends PureComponent {
         <Popover id={5} message={"And we are not even close to done yet. 😄. I would suggest taking a break and stretching your legs then coming back."}/>
 
         </div>
-    
+
 
         <p>Turing now defines two seperate types of Machines in his paper. </p>
 
@@ -321,10 +318,10 @@ of the second kind, but cannot print any more symbols of the first kind.
             Circular machines here are in some fundamental way broken. Their m-configurations are made in some way that a q<subscript>n</subscript>'s callback plus scanned symbol doesn't have an entry or their m-configuration leads to a loop where no more 0 or 1's or ever printed onto the tape. Notice that there he is very clear that there is no possible move. Not that there is a halt state. Turing does not consider that there can be configuration that ends the machine. The machine is supposed to go on forever. In fact the word is not even mentioned in the paper. I emphasize this point because so many examples of turing machines include the ability for the machine to halt. But that is later addition added onto the concept seperate from this paper and the how Turing thought about the concept of computational machines. This is why he is using circular to describe these machines. They are stuck in a broken loop and not continuing on a valid path. The naming convention still sucks though.
         </p>
         <div className="paragraph">
-          So lets reiterate what we have so for. Turing has described the concept of a computational machine. 
-          It's input and output exists on a piece of tape. 
+          So lets reiterate what we have so for. Turing has described the concept of a computational machine.
+          It's input and output exists on a piece of tape.
           The machine configuration movements are automatic and should print out figures for an infinite amount of time.
-          This tape must be considered infinite since the machine writes down an infinite amount of figures. 
+          This tape must be considered infinite since the machine writes down an infinite amount of figures.
           It does this by a finite configurations of movements which he labels m-configurations.
           Finally the machine has no understanding sense of state but can scan a symbol that is in the machine itself.
           Only a human looking at the machine can fully gage what it has done.
@@ -333,12 +330,12 @@ of the second kind, but cannot print any more symbols of the first kind.
         </div>
 
         <p>
-         But how does this actually all fit together. While Turing is very throughough is explaining the details of the machine. 
-         How it actually works might still be kinda confusing. Lets look at a simulation of a Turing machine to see how all these pieces fit together. 
+         But how does this actually all fit together. While Turing is very throughough is explaining the details of the machine.
+         How it actually works might still be kinda confusing. Lets look at a simulation of a Turing machine to see how all these pieces fit together.
         </p>
 
         <p>
-        <a href={`${process.env.PUBLIC_URL}/chapter-2/`}>The very most simple 'Turing Machine'</a>
+        <a href={`${process.env.PUBLIC_URL}/chapter-2/`}>Chapter 2- The very most simple 'Turing Machine'</a>
         </p>
       </div>
     );
