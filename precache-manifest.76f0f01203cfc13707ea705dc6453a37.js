@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "625ce5c46fd208242231",
+    "revision": "19a07f70cb0f4703a7b3",
     "url": "/react_turing_machine/static/css/main.363af76e.chunk.css"
   },
   {
-    "revision": "625ce5c46fd208242231",
-    "url": "/react_turing_machine/static/js/main.625ce5c4.chunk.js"
+    "revision": "19a07f70cb0f4703a7b3",
+    "url": "/react_turing_machine/static/js/main.19a07f70.chunk.js"
   },
   {
-    "revision": "df1e6f0d2e3872e09207",
+    "revision": "4dadd3ab6a2e0b9cd308",
     "url": "/react_turing_machine/static/css/1.f1ed7f51.chunk.css"
   },
   {
-    "revision": "df1e6f0d2e3872e09207",
-    "url": "/react_turing_machine/static/js/1.df1e6f0d.chunk.js"
+    "revision": "4dadd3ab6a2e0b9cd308",
+    "url": "/react_turing_machine/static/js/1.4dadd3ab.chunk.js"
   },
   {
     "revision": "dc4c57e187a6768538d0",
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/react_turing_machine/static/media/MaxterBoardSt.5e31aada.ttf"
   },
   {
-    "revision": "d2ff105c619172fbc4499cc6818b8eb6",
+    "revision": "90adc697f0cea7230f2c03baa1f99f1c",
     "url": "/react_turing_machine/index.html"
   }
 ];
