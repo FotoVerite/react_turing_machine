@@ -20,6 +20,7 @@ import chapterOne from './components/chapterOne'
 import chapterTwo from './components/chapterTwo'
 import chapterThree from './components/chapterThree'
 import chapterFour from './components/chapterFour'
+import AndNowTheHardPartStarts from './components/AndNowTheHardPartStarts'
 
 import Head from './components/head'
 import Output from './components/output'
@@ -62,6 +63,7 @@ class App extends Component {
               <DropdownItem><NavLink className={"text-secondary"} href={`${process.env.PUBLIC_URL}/chapter-1/`}>Why this site</NavLink></DropdownItem>
               <DropdownItem><NavLink className={"text-secondary"} href={`${process.env.PUBLIC_URL}/chapter-2/`}>A simple Turing Machine</NavLink></DropdownItem>
               <DropdownItem><NavLink className={"text-secondary"} href={`${process.env.PUBLIC_URL}/chapter-3/`}>A comple Turing Machine</NavLink></DropdownItem>
+              <DropdownItem><NavLink className={"text-secondary"} href={`${process.env.PUBLIC_URL}/chapter-4/`}>And now the hard part starts</NavLink></DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
@@ -74,7 +76,8 @@ class App extends Component {
         <Route path="/chapter-1/" component={chapterOne} />
         <Route path="/chapter-2/" component={chapterTwo} />
         <Route path="/chapter-3/" component={chapterThree} />
-        <Route path="/chapter-4/" component={chapterFour} />
+        <Route path="/chapter-s/" component={chapterFour} />
+        <Route path="/chapter-4/" component={AndNowTheHardPartStarts} />
       </div>
     </Router>
     <footer>

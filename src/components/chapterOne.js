@@ -23,13 +23,15 @@ class chapterOne extends PureComponent {
           , I noticed an interesting trend of people misrepresenting what a turing machine is.
         </div>
         <p>The misrepresentation is mostly around simplifying the concept, but also someitmes down right mangling it to the point of nonsense. Looking at you <a href='https://www.google.com/doodles/alan-turings-100th-birthday' target="_blank"> google doodle</a>.
-         <Popover id={2} message={"I mean seriously it's not even a turing machine it's a puzzle in the general shape of a turing machine. A bad puzzle!"}/>
+         <Popover id={2} message={
+          "I mean seriously it's not even a turing machine it's a puzzle in the general shape of a turing machine. A really bad puzzle!"}/>
         </p>
-        <p> These simplifications though, while well meaning I do believe cause so major cogniatives issues when you are grappling with the paper and the issues
-        Turing illustrated vai this machine. Of course one can add on to the concept of what Turing machine is or can do. We improve and rethink things constantly.
-        But to represent these as 'Turing Machines and not instead 'Turing Equivilant Machine'
+        <p> These simplifications though, while well meaning, causes major cognative issues when you are grappling with the paper and the issues
+        Turing illustrated vai this machincal concept. Of course one can add on to the concept of what Turing machine is or can do; 
+        we improve and rethink things constantly.
+        But, to represent these as 'Turing Machines and not instead 'Turing Equivilant Machine'
         creates additional headaches that can be avoided by stating what Turing described vs how we use the term today.'
-        But to really examine these issues I first need to describe what I feel a Turing Machine is.
+        So let's look at in Turing Own Words how one constructs his machine.
         </p>
 
         <p>Note: I will be showing exerpts from the paper in this format.</p>
@@ -88,15 +90,15 @@ class chapterOne extends PureComponent {
         </div>
         <div className='paragraph'>
         The first thing to note is that Turing wrote increadibly densly.
-        The entire paper is not entirely easily understood mostly from his poor word choices
+        The entire paper is not entirely easily understood, mostly from vague word choices and laborious descriptions. 
         so take your time in reading excerpts and don't feel like it is your fault for not following.
         <Popover id={3} message={"I've read the second half 50 times and I still struggle with most of it."}/>
 
         </div>
         <div className='paragraph'>
-        The Second is that Alan Turing loved him some German font. They are increadibly hard to read and make following the paper even more tedious.
+        The second is that Alan Turing loved him some German font. They are increadibly hard to read and make following the paper even more tedious.
         I will try to represent them accurately in exerpts but I will also rename them for easier discussion.
-        Mostly to upper or lower case normal font family of the site but also at times in EMOJI. It will make sense in context.
+        Mostly to upper or lower case normal font type but also at times in EMOJI. It will make sense in context.
         <Popover id={4} message={"I mean who doesn't love themselves a well chosen emoji 🙌"}/>
 
         </div>
@@ -119,12 +121,27 @@ class chapterOne extends PureComponent {
         <p>
         Turing is asking us to imagine a machine that will compute real numbers. He calls this a computational machine.
         This is the base of what we know as a turing machine but is not the full description.
-        This machine has a finite number of states.
+        </p>
+
+        <p>
+        The first thing to focus your intention on is that this this computational machine as he starts out is only built for one purpose. 
+        And that is to compute a real number. This needs to be made crystal clear. Turing here, when he says compute, 
+        is not talking about simple calucalation. The machine intention is not about addition or multiplication, 
+        though it is capable of such feats. The intention is reckoning a real number in full. 
+        A real number be it whole, rational, or irational is infinite in length. I cannot stress how important it is to keep this in mind
+        as you are reading this. 
+        </p>
+
+        <p>
+        The second thing to focus on is that 
+        this machine has a finite number of states.
         Hence they are countable and knowable.
         This is not to say they are few. A computational machine could have google of states. But they are able to be counted given enough time.
         These states are labeled by turing as list of <span className={'gothic'}>qn</span> starting and 1 and incrementing upward.
         We will refer to these as q<sub>n</sub> from now on. And these make up what he calls the m-configurations of the machine.
         </p>
+
+
 
         <div className={'block-quote'}>
           <p>The machine is supplied with a
@@ -136,7 +153,7 @@ class chapterOne extends PureComponent {
         </div>
         <p>
         So as described you have a machine supplied with an amount of tape.
-        <em>Turing will later say that the tape can be infinite</em>
+        <em>Turing will later say that the tape can be infinite</em>&nbsp;
         This tape is divided into sections. Like so </p>
           <DisplayTape squares={
             [
@@ -237,8 +254,9 @@ class chapterOne extends PureComponent {
           <small> Section 1: Paragraph 2 line 8 </small>
         </div>
 
-        <div className='paragraph'> Notice that Turing says, 'decimal of the real number'. Turing in this paper is calculating fractional decimal numbers.
-        #TODO why? For most purposes it's easy enough to consider whole numbers written in binary
+        <div className='paragraph'> Notice that Turing says, 'decimal of the real number'. 
+        Turing in this paper is calculating fractional decimal numbers
+        via binary expansion. For most purposes it's easy enough to consider whole numbers written in binary
         we can consider this to be equivilant to a whole real number.
         But it is good to keep in mind that these machines in the paper are calculating fractions between 0 and 1. Also note that 0 and 1's cannot be erased.
         Only the other symbols that are used to keep track of state.
@@ -326,7 +344,8 @@ of the second kind, but cannot print any more symbols of the first kind.
           Finally the machine has no understanding sense of state but can scan a symbol that is in the machine itself.
           Only a human looking at the machine can fully gage what it has done.
           <Popover id={6}
-           message={"All this monotonous detail I think is why so many people simplify what a Turing machine is. The paper is torture but groking the intricacies helps with understanding why it is important."}/>
+           message={"All this monotonous detail I think is why so many people simplify what a Turing machine is. " +
+           "The paper is torture but groking the intricacies helps with understanding why it is important."}/>
         </div>
 
         <p>

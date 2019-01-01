@@ -90,7 +90,7 @@ class chapterTwo extends PureComponent {
       This is not necessary as the machine will work as well with declaritive nameing like 'print-1' or {uuidv1()}&nbsp;
       But I feel that that this is illustrative of what the configuration does and celebrates Turing's use of gothic lettering at the same time.
       This configuration has an optional name field. This is necessary due to how complicated working with
-      a turing machine can become. Have twenty states and it you need all the context you can get. </p>
+      a turing machine can become. As your states grow and grow you need all the context you can get. </p>
 
       <p>
        The steps field houses an array which can be of any length. Each string indicates an operation for the machine to do.
